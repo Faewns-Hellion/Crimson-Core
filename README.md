@@ -2,7 +2,7 @@
 
 Foundry VTT 14 modules for dnd5e by [Faewns-Hellion](https://github.com/Faewns-Hellion).
 
-This repository is the **Crimson Initiate** tier: the five free modules that every Crimson table runs. Each module installs and releases on its own; there is no bundled core or profile package. Paid tier modules and campaign-private compendiums are packaged from a private release folder and are not part of this repository or its history.
+This repository is the **Crimson Initiate** tier from my collection of modules. This small collection of free content includes an icon picker that finally puts all the icons you own in one easy to read menu, a new character sheet, and integration with midiQOL and other modules when specified. Each module installs and releases on its own; there is no bundled core or profile package. Paid tier modules and campaign-private compendiums are packaged from a private release folder and are not part of this repository or its history.
 
 ## Tiers
 
