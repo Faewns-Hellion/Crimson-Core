@@ -59,6 +59,20 @@ node tools/sync-modules.mjs --source "C:\Users\PC-01\AppData\Local\FoundryVTT\Da
 
 The script reads the public tier from `tiers.json`, copies those modules, drops only transient `LOCK` files, preserves LevelDB journals, and rebuilds `dist/<module-id>-<version>.zip`. It removes older zips of the same module so `dist/` holds exactly one current build per module. Paid and campaign-private modules are never copied.
 
+## Releasing a free module
+
+One command bumps the version, rebuilds the package, commits, tags and pushes:
+
+```powershell
+node tools/release-module.mjs crimson-hub
+node tools/release-module.mjs crimson-icons --bump minor
+node tools/release-module.mjs crimson-drafts --version 0.2.0
+```
+
+The version is bumped in the installed `module.json` under Foundry, so the live copy and the repository stay in agreement; the script then syncs, commits `Release <module-id> <version>`, tags `<module-id>-v<version>` and pushes `main` plus the tag. It refuses to run on a dirty tree, off `main`, when the tag already exists, or when another module changed during the sync.
+
+Add `--dry-run` to see the plan without touching anything, or `--no-push` to stop after the local commit and tag.
+
 ## Packaging the paid tiers
 
 Paid modules are packaged from the installed Foundry copies straight into a private folder outside this repository:
@@ -89,6 +103,8 @@ tiers.json                        machine-readable tier definition
 modules/<module-id>/              complete module source and hosted manifest
 dist/<module-id>-<version>.zip    current installable bundle per free module
 tools/sync-modules.mjs            syncs free modules from Foundry and rebuilds bundles
+tools/release-module.mjs          bumps, syncs, tags and pushes one free module
+tools/install-urls.mjs            keeps manifest/download pointed at main
 tools/build-tier-packages.mjs     builds the private paid-tier release folders
 tools/zip-module.py               archive helper: module folder at the zip root
 ```
