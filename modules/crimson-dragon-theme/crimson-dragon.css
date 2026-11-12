@@ -1,0 +1,478 @@
+/* Crimson Dragon — app-wide Foundry VTT 14 skin. No canvas or artwork filters. */
+body, body :is(.application, .app, .themed, .theme-dark, .theme-light, .theme-fantasy, .theme-scifi) {
+  color-scheme: dark;
+  --color-scheme: dark;
+  --color-warm-1: #ff6677;
+  --color-warm-2: #ae293a;
+  --color-warm-3: #401923;
+  --color-cool-3: #45202a;
+  --color-cool-4: #210f17;
+  --color-cool-5: #140b10;
+  --color-cool-5-25: #140b1040;
+  --color-cool-5-50: #140b1080;
+  --color-cool-5-75: #140b10bf;
+  --color-cool-5-90: #140b10f5;
+  --color-text-primary: #f3e2d8;
+  --color-text-emphatic: #fff2dd;
+  --color-text-secondary: #d6b7ad;
+  --color-text-subtle: #bd9691;
+  --color-text-hyperlink: #ffb977;
+  --color-text-selection: #fff4e5;
+  --color-text-selection-bg: #8c2438;
+  --color-border: #78404a;
+  --color-border-highlight: #f26958;
+  --color-border-highlight-alt: #ef5268;
+  --color-shadow-primary: #e64142;
+  --color-shadow-highlight: #ef5268;
+  --background: #1c1017f7;
+  --color-header-background: #3f131e;
+  --color-tabs-border: #90505a;
+  --color-fieldset-border: #78404a;
+  --color-form-label: #edcdbd;
+  --color-form-label-hover: #fff1d9;
+  --color-form-hint: #c4a29a;
+  --color-form-hint-hover: #f3d7c4;
+  --color-select-option-bg: #24121b;
+  --color-data-border: #6e3542;
+  --color-data-background: #25131b;
+  --button-background-color: #481923;
+  --button-border-color: #a34551;
+  --button-text-color: #ffe4c9;
+  --button-hover-background-color: #762535;
+  --button-hover-border-color: #ef5268;
+  --button-hover-text-color: #fff7e8;
+  --button-focus-outline-color: #ef5268;
+  --input-background-color: #180d14;
+  --input-border-color: #79414c;
+  --input-text-color: #f8e7dc;
+  --input-placeholder-color: #b88f89;
+  --input-focus-outline-color: #ef5268;
+  --checkbox-checked-color: #ec7660;
+  --checkbox-background-color: #30131c;
+  --color-text-dark-primary: #f3e2d8;
+  --color-text-dark-secondary: #d6b7ad;
+  --color-text-dark-header: #fff2dd;
+  --color-text-dark-inactive: #bd9691;
+  --color-border-light-primary: #78404a;
+  --color-border-light-secondary: #63313b;
+  --color-border-dark: #78404a;
+  --dnd5e-color-gold: #d9ad68;
+  --dnd5e-color-parchment: #25151c;
+  --dnd5e-color-card: #25151c;
+}
+body :is(.application, .app) {
+  background: linear-gradient(140deg, #32131e, #160d14 68%);
+  color: #f3e2d8;
+  border: 1px solid #8e414f;
+  box-shadow: 0 12px 38px #0009, inset 0 1px #e6a65e44;
+  border-radius: 9px;
+}
+body :is(.application, .app) .window-header {
+  background: linear-gradient(105deg, #300e18, #701d30 55%, #2b1019);
+  color: #ffe2ad;
+  border-bottom: 1px solid #cd955a;
+  border-radius: 8px 8px 0 0;
+}
+body :is(.application, .app) .window-title {
+  color: #ffe2ad;
+  font-family: Georgia, "Palatino Linotype", serif;
+  letter-spacing: .035em;
+  text-shadow: 0 2px 3px #000;
+}
+/* dnd5e 6 draws its own oversized sheet title below the header and places the
+   Compendium Browser's Advanced toggle over it. An opaque header bar hides the
+   top of that title, so dnd5e ApplicationV2 windows keep a transparent header. */
+body .dnd5e2.application:not(.minimized) .window-header {
+  background: transparent;
+  border-bottom-color: #cd955a;
+  padding-inline: 10px 14px;
+}
+body .dnd5e2.application:not(.minimized) .window-header h1,
+body .dnd5e2.application:not(.minimized) .window-header h2 {
+  color: #ffe2ad;
+}
+body .dnd5e2.compendium-browser .mode-toggle {
+  z-index: 2;
+}
+/* The browser has its own footer rail; do not lay the theme's gilded foot over it. */
+body .dnd5e2.compendium-browser::after { display: none; }
+body :is(.application, .app) .window-content {
+  background: linear-gradient(135deg, #2a141df5, #170e16fa);
+  color: #f3e2d8;
+}
+body :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), select, textarea) {
+  background-color: #180d14;
+  color: #f8e7dc;
+  border-color: #79414c;
+}
+body :is(input, select, textarea, button, a):focus-visible {
+  outline: 2px solid #ef5268;
+  outline-offset: 2px;
+}
+body select option { background: #24121b; color: #f8e7dc; }
+body :is(button, .button) { color: #ffe4c9; }
+body :is(button, .button):not(:disabled):hover {
+  border-color: #ef5268;
+  box-shadow: 0 0 8px #dc35474d;
+}
+body :is(button, input, select, textarea):disabled { opacity: .55; }
+body :is(.tabs, nav.tabs) [data-tab].active {
+  color: #ffd99b;
+  text-shadow: 0 0 9px #f04b43;
+  border-bottom-color: #efb96f;
+}
+body :is(#sidebar, #sidebar-content, .sidebar-popout, #players, #hotbar, #context-menu, #tooltip) {
+  background: linear-gradient(145deg, #31131ef7, #140c13fa);
+  color: #f3e2d8;
+  border-color: #8e414f;
+}
+body :is(#sidebar-tabs, #sidebar .tabs) { border-bottom-color: #c18c57; }
+body :is(#sidebar-tabs, #sidebar .tabs) .active { color: #ffd99b; box-shadow: 0 0 9px #a81e35; }
+body :is(#scene-controls, #controls) :is(button, .control-tool),
+body #navigation .scene, body #scene-navigation .scene,
+body #hotbar .macro {
+  background: linear-gradient(#421522, #1c0e16);
+  color: #f8dfcb;
+  border-color: #98505b;
+}
+body :is(#scene-controls, #controls) :is(button, .control-tool).active,
+body #hotbar .macro:hover {
+  background: #752338;
+  border-color: #ef5268;
+  box-shadow: 0 0 8px #d84445;
+}
+body .chat-message {
+  background: linear-gradient(120deg, #351b25, #21131c);
+  color: #f4e0d5;
+  border: 1px solid #844350;
+  border-left: 3px solid #d65354;
+}
+body .chat-message :is(.message-header, .message-sender, .flavor-text) { color: #e9c5b4; }
+body .chat-message :is(.dice-total, .dice-formula, .dice-tooltip .dice) {
+  background: #180e15;
+  color: #ffe0a9;
+  border-color: #74404b;
+}
+body :is(.journal-entry-content, .journal-entry-page, .editor-content, prose-mirror) {
+  color: #f3e2d8;
+}
+body .journal-entry-content { background: #21131c; }
+body :is(.directory-item, .combatant):hover { background-color: #68253655; }
+body .combatant.active { background: #76243866; border-color: #d9a363; }
+body :is(.application, .app) :is(h1, h2, h3, legend) { color: #f3d09a; border-color: #81434b; }
+body :is(.application, .app) :is(a.content-link, a.inline-roll) {
+  background: #48212c;
+  color: #ffdcab;
+  border-color: #aa6470;
+}
+body:not(.game) {
+  background-color: #14090f;
+  background-image: radial-gradient(ellipse at 50% 100%, #8c182b88, transparent 65%),
+    repeating-conic-gradient(from 45deg, #ffffff03 0% 25%, transparent 0% 50%);
+  background-size: auto, 44px 44px;
+}
+body:not(.game) :is(#setup, #join-game, #auth, #setup-packages) {
+  --background: #1c1017f5;
+  color: #f3e2d8;
+}
+body ::selection { color: #fff4e5; background: #8c2438; }
+body { scrollbar-color: #ac4b5c #190f16; }
+
+/* Keep chat metadata legible over textured cards from other UI modules. */
+body .chat-message .message-header :is(.message-metadata, .message-timestamp, .message-delete, .message-control, .message-recipient, .message-recipients),
+body .chat-message :is(.flavor-text, .whisper-to) {
+  color: #fff0e7 !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 2px #000;
+}
+body .chat-message .message-header .message-metadata,
+body .chat-message :is(.flavor-text, .whisper-to) {
+  background: #21131ce8;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+body .chat-message .message-header .message-timestamp {
+  font-size: 12px;
+}
+body .chat-message .message-header .message-metadata :is(a, button, i, time) {
+  color: inherit !important;
+}
+
+/* Crimson hover accents, including legacy Foundry controls. */
+body {
+  --color-shadow-highlight: #ef5268;
+  --color-border-highlight-alt: #ef5268;
+}
+body a:hover {
+  text-shadow: 0 0 8px #ef5268;
+}
+body :is(#sidebar-tabs, #sidebar .tabs) [data-tab]:hover,
+body :is(.tabs, nav.tabs) [data-tab]:hover,
+body .chat-message .message-header :is(a, button):hover {
+  color: #ff8592 !important;
+  border-color: #ef5268;
+  text-shadow: 0 0 8px #c72c47;
+}
+/* Red species outline and tab squares; preserve gold icon artwork. */
+/* Match the system hover effect exactly, changing only its glow color. */
+body .dnd5e2.sheet.actor.character .sheet-body .pill-lg.race:hover:not(:has(a:hover)),
+body .dnd5e2.sheet.actor.character .sheet-body .pill-lg.background:hover:not(:has(a:hover)) {
+  box-shadow: 0 0 12px #ef5268;
+}
+body .dnd5e2.vertical-tabs nav.tabs > .item {
+  color: var(--dnd5e-color-gold) !important;
+  --icon-fill: var(--dnd5e-color-gold);
+}
+body .dnd5e2.vertical-tabs nav.tabs > .item:is(.active, :hover, :focus-visible) {
+  background: #8c2438;
+  border-color: #ef5268;
+  color: var(--dnd5e-color-gold) !important;
+  --icon-fill: var(--dnd5e-color-gold);
+  text-shadow: none;
+  box-shadow: inset 0 0 0 1px #ef5268;
+}
+body .dnd5e2.vertical-tabs nav.tabs > .item:is(.active, :hover, :focus-visible) i {
+  color: var(--dnd5e-color-gold);
+  text-shadow: none;
+}
+/* Readable XP cards and the automatic player name under chat aliases. */
+body .chat-message .monks-tokenbar.assignxp .card-header,
+body .chat-message .monks-tokenbar.assignxp .card-header h3,
+body .chat-message .monks-tokenbar.assignxp .items-header,
+body .chat-message .monks-tokenbar.assignxp .items-header h3,
+body .chat-message .monks-tokenbar.assignxp .card-footer {
+  color: #fff0e7 !important;
+  text-shadow: 0 1px 2px #000;
+}
+body .chat-message .message-header .message-sender .name-stacked .subtitle {
+  color: #fff0e7 !important;
+  opacity: 1 !important;
+  font-size: 12px;
+  text-shadow: 0 1px 2px #000;
+  background: #21131ce8;
+  border-radius: 3px;
+  padding: 1px 4px;
+  align-self: flex-start;
+}
+/* Approved dragon pause artwork. Keep the pause state and caption accessible. */
+body #pause {
+  top: 50%;
+  left: 50%;
+  width: min(480px, 70vw);
+  height: auto;
+  aspect-ratio: 3 / 2;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  animation: none;
+}
+body #pause.paused {
+  display: block;
+  animation: none;
+}
+body #pause::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Baked by build-dragon-pause.py: still dragon whose eye, open mouth and gems pulse with light. */
+  background: url("assets/dragon-pause-animated.webp") center / contain no-repeat;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  body #pause::before { background-image: url("assets/dragon-pause-static.png"); }
+}
+body #pause > div {
+  animation: none;
+}
+body #pause img {
+  display: none;
+}
+body #pause figcaption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+/* Paused: crimson perimeter with moving tongues of fire and rising embers. */
+body.mld-paused {
+  --pause-border-color: 220, 30, 46;
+}
+body.mld-paused::after {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
+  pointer-events: none;
+  border: 2px solid #dc263b;
+  box-shadow: inset 0 0 65px 16px #c51b3670, inset 0 0 12px #ff542c;
+  animation: crimson-pause-flicker 2.7s ease-in-out infinite alternate;
+}
+body.mld-paused::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 18px 85px at 18px 100%, #ffdd78 0%, #ff6b20 22%, #d91d32a0 48%, transparent 72%) 0 100% / 83px 155px repeat-x,
+    radial-gradient(ellipse 26px 115px at 45px 100%, #ff9f32 0%, #e6382080 42%, transparent 72%) 0 100% / 137px 185px repeat-x,
+    radial-gradient(circle 2px at 20px 60px, #ffc16b 65%, transparent 100%) 0 100% / 149px 145px repeat-x;
+  background-repeat: repeat-x;
+  animation: crimson-pause-flames 3s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 7px #f33c22);
+}
+@keyframes crimson-pause-flicker {
+  0%, 100% { opacity: .85; }
+  35% { opacity: 1; }
+  65% { opacity: .72; }
+}
+@keyframes crimson-pause-flames {
+  0% { background-position: 0 100%, 0 100%, 0 100%; background-size: 83px 125px, 137px 165px, 149px 145px; opacity: .7; }
+  45% { background-position: 9px 100%, -12px 100%, 6px calc(100% - 35px); background-size: 83px 175px, 137px 130px, 149px 145px; opacity: .95; }
+  100% { background-position: -6px 100%, 8px 100%, -4px calc(100% - 85px); background-size: 83px 145px, 137px 195px, 149px 145px; opacity: .8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.mld-paused::before, body.mld-paused::after { animation: none; }
+}
+/* Pixel fire: crisp stepped silhouettes and discrete animation frames. */
+body.mld-paused::before {
+  background-image: url("/worlds/crimson-tyrant/assets/pixel-fire.svg");
+  background-position: 0 100%;
+  background-size: 256px 112px;
+  background-repeat: repeat-x;
+  image-rendering: pixelated;
+  filter: none;
+  opacity: .95;
+  animation: crimson-pixel-fire 900ms steps(1, end) infinite;
+}
+@keyframes crimson-pixel-fire {
+  0%, 100% { background-position: 0 100%; background-size: 256px 112px; }
+  25% { background-position: -64px 100%; background-size: 256px 128px; }
+  50% { background-position: -128px 100%; background-size: 256px 112px; }
+  75% { background-position: -192px 100%; background-size: 256px 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.mld-paused::before { animation: none; }
+}
+/* Keep pixel fire inside the viewport on all four edges. */
+body.mld-paused::before {
+  position: fixed;
+  inset: 8px;
+  width: auto;
+  height: auto;
+  z-index: 1;
+  background-image:
+    url("/worlds/crimson-tyrant/assets/pixel-fire.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-top.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-left.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-right.svg");
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 256px 96px, 256px 96px, 96px 256px, 96px 256px;
+  background-position: left bottom, left top, left top, right top;
+  opacity: .95;
+  animation: crimson-pixel-perimeter 800ms steps(1, end) infinite;
+}
+@keyframes crimson-pixel-perimeter {
+  0%, 100% { background-position: 0 bottom, 0 top, left 0, right 0; }
+  25% { background-position: -64px bottom, 64px top, left -64px, right 64px; }
+  50% { background-position: -128px bottom, 128px top, left -128px, right 128px; }
+  75% { background-position: -192px bottom, 192px top, left -192px, right 192px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.mld-paused::before { animation: none; }
+}
+/* Continuous low pixel flames with independently animated silhouettes. */
+body.mld-paused::before {
+  inset: 2px;
+  background-image:
+    url("/worlds/crimson-tyrant/assets/pixel-fire-v2-bottom.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-v2-top.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-v2-left.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-v2-right.svg");
+  background-size: 384px 48px, 384px 48px, 48px 384px, 48px 384px;
+  background-position: left bottom, left top, left top, right top;
+  animation: none;
+  opacity: .92;
+}
+/* Periodic flame motion with staggered embers; reserve space above the low fire. */
+body.mld-paused::before {
+  background-image:
+    url("/worlds/crimson-tyrant/assets/pixel-fire-v3-bottom.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-v3-top.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-v3-left.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-v3-right.svg");
+  background-size: 384px 96px, 384px 96px, 96px 384px, 96px 384px;
+}
+/* Lightweight pause fire: 12 flame frames at 5 fps, five embers per tile. */
+body.mld-paused::before {
+  background-image:
+    url("/worlds/crimson-tyrant/assets/pixel-fire-lite-bottom.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-lite-top.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-lite-left.svg"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-lite-right.svg");
+}
+body.mld-paused::after {
+  animation: none;
+  opacity: .85;
+}
+/* Baked 4-fps pixel fire: no live SVG paths or particle animations. */
+body.mld-paused::before {
+  background-image:
+    url("/worlds/crimson-tyrant/assets/pixel-fire-tiny-bottom.gif"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-tiny-top.gif"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-tiny-left.gif"),
+    url("/worlds/crimson-tyrant/assets/pixel-fire-tiny-right.gif");
+  background-size: 288px 54px, 288px 54px, 54px 288px, 54px 288px;
+  animation: none;
+}
+/* Locked tooltip clones must retain the same dark palette as hover tooltips. */
+body .locked-tooltip,
+body .locked-tooltip.dnd5e-tooltip {
+  --dnd5e-application-background: #21131c;
+  --dnd5e-background-card: #21131c;
+  --dnd5e-background-alt-1: #2c1925;
+  --color-text-primary: #f3e2d8;
+  --color-text-secondary: #d6b7ad;
+  --color-text-tertiary: #c4a29a;
+  --color-text-emphatic: #fff2dd;
+  --background: #21131c;
+  background: linear-gradient(145deg, #31131e, #140c13) !important;
+  color: #f3e2d8 !important;
+  border-color: #8e414f;
+  color-scheme: dark;
+}
+body .locked-tooltip :is(.content, .description, .enrichment) {
+  background-color: transparent;
+  color: #f3e2d8;
+}
+body .locked-tooltip :is(h1, h2, h3, h4) {
+  color: #fff2dd;
+}
+
+/* Keep Nexus dossier buttons readable on both parchment and dark surfaces. */
+body .augur-nexus .nexus-themed-surface button {
+  color: #fff1dd !important;
+  background: #481923 !important;
+  border-color: #995566 !important;
+  text-shadow: none;
+}
+body .augur-nexus .nexus-themed-surface button :is(span, i) {
+  color: inherit !important;
+}
+body .augur-nexus .nexus-themed-surface button:not(:disabled):hover {
+  color: #ffffff !important;
+  background: #702b42 !important;
+}
+body .augur-nexus .nexus-themed-surface button:is(.active, [aria-pressed="true"]) {
+  background: #702b42 !important;
+  border-color: #e8b96e !important;
+}
+body .augur-nexus .nexus-themed-surface button:focus-visible {
+  outline: 2px solid var(--nexus-accent-primary, #713544);
+  outline-offset: 2px;
+}

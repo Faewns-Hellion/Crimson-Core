@@ -1,0 +1,300 @@
+<div class="cg-shell">
+  <header class="cg-header">
+    <div class="cg-crest" aria-hidden="true">
+      <i class="fa-solid fa-shield-halved"></i>
+    </div>
+
+    <div class="cg-heading">
+      <p class="cg-kicker">CRIMSON TYRANT <span class="cg-divider">//</span> GARRISON LEDGER</p>
+      <h1>{{name}}</h1>
+      <p class="cg-sub">{{subtitle}}</p>
+      <p class="cg-sig">
+        <span class="cg-sig-dot" aria-hidden="true"></span>
+        DAY {{day}} <span class="cg-divider">//</span> {{alertLabel}} ALERT
+        <span class="cg-divider">//</span> {{autoLabel}}
+      </p>
+    </div>
+
+    <div class="cg-header-actions">
+      {{#if canManage}}
+      <button type="button" class="cg-button cg-button--primary" data-action="advanceDay">
+        <i class="fa-solid fa-forward-step"></i> Advance day
+      </button>
+      {{/if}}
+    </div>
+  </header>
+
+  <div class="cg-status">
+    <div class="cg-stat">
+      <span>SUPPLIES</span>
+      <strong>{{supplies}}<small>/{{supplyMax}} days</small></strong>
+    </div>
+    <div class="cg-stat">
+      <span>TREASURY</span>
+      <strong>{{treasury}}<small> gp</small></strong>
+    </div>
+    <div class="cg-stat">
+      <span>PAYROLL</span>
+      <strong>{{payroll}}<small> gp/week</small></strong>
+    </div>
+    <button type="button" class="cg-auto {{#if autoOn}}is-on{{/if}}" data-action="toggleAuto" title="Toggle automatic day advance after a long rest">
+      <i class="fa-solid fa-campground"></i>
+      <span>
+        <b>{{autoLabel}}</b>
+        <small>{{#if autoOn}}One long rest advances the ledger{{else}}Advance the ledger by hand{{/if}}</small>
+      </span>
+    </button>
+  </div>
+
+  {{#if journalMissing}}
+  <main class="cg-body">
+    <div class="cg-empty">
+      <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+      <h2>The ledger is not open</h2>
+      <p>{{#if isGM}}The garrison ledger could not be created. Check the browser console for the journal creation error.{{else}}The GM has not opened the Crimson Garrison ledger in this world yet.{{/if}}</p>
+    </div>
+  </main>
+  {{else}}
+  <nav class="cg-tabs" role="tablist" aria-label="Garrison sections">
+    {{#each tabs}}
+    <button type="button" class="cg-tab {{#if active}}is-active{{/if}}" data-action="selectTab" data-tab="{{id}}" role="tab" aria-selected="{{#if active}}true{{else}}false{{/if}}">
+      {{label}}
+    </button>
+    {{/each}}
+  </nav>
+
+  <main class="cg-body">
+    {{#if isOverview}}
+    <section class="cg-overview">
+      <div class="cg-panel cg-readiness-panel">
+        <header class="cg-panel-head">
+          <div>
+            <p class="cg-eyebrow">POSTURE</p>
+            <h2>Readiness</h2>
+          </div>
+          <span class="cg-alert {{alertClass}}"><i class="fa-solid fa-circle"></i> {{alertLabel}}</span>
+        </header>
+        <div class="cg-readiness">
+          {{#each readiness}}
+          <div class="cg-meter-row">
+            <div class="cg-meter-label"><span>{{label}}</span><b>{{value}}/5</b></div>
+            <div class="cg-meter {{className}}" role="meter" aria-valuemin="0" aria-valuemax="5" aria-valuenow="{{value}}" aria-label="{{label}} {{value}} of 5">
+              <span style="--cg-progress: {{pct}}%"></span>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="cg-panel cg-next-panel">
+        <header class="cg-panel-head">
+          <div>
+            <p class="cg-eyebrow">WORK IN PROGRESS</p>
+            <h2>Active projects</h2>
+          </div>
+          <span class="cg-count">{{activeProjects.length}}</span>
+        </header>
+        {{#if activeProjects.length}}
+        <div class="cg-next-list">
+          {{#each activeProjects}}
+          <article class="cg-next-card">
+            <div class="cg-next-top">
+              <span class="cg-track">{{trackLabel}}</span>
+              <span class="cg-project-status {{statusClass}}">{{statusLabel}}</span>
+            </div>
+            <h3>{{name}}</h3>
+            <div class="cg-meter cg-meter--project" role="meter" aria-valuemin="0" aria-valuemax="{{segments}}" aria-valuenow="{{filled}}" aria-label="{{name}} progress">
+              <span style="--cg-progress: {{pct}}%"></span>
+            </div>
+            <p class="cg-next-meta">{{filled}}/{{segments}} segments <span class="cg-divider">//</span> {{costLabel}} <span class="cg-divider">//</span> {{checkLabel}}</p>
+          </article>
+          {{/each}}
+        </div>
+        {{else}}
+        <div class="cg-empty cg-empty--small">
+          <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
+          <p>No active projects. Open the Projects tab and put a crew to work.</p>
+        </div>
+        {{/if}}
+      </div>
+
+      <div class="cg-panel cg-sector-panel">
+        <header class="cg-panel-head">
+          <div>
+            <p class="cg-eyebrow">GROUND</p>
+            <h2>Sector survey</h2>
+          </div>
+          <span class="cg-count">{{sectors.length}}</span>
+        </header>
+        <div class="cg-sector-list">
+          {{#each sectors}}
+          <div class="cg-sector-row {{stateClass}}">
+            <i class="{{icon}}" aria-hidden="true"></i>
+            <div>
+              <b>{{name}}</b>
+              <small>{{projectName}}</small>
+            </div>
+            <span class="cg-sector-state">{{stateLabel}}</span>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="cg-panel cg-log-panel">
+        <header class="cg-panel-head">
+          <div>
+            <p class="cg-eyebrow">WATCH LOG</p>
+            <h2>Recent reports</h2>
+          </div>
+          <span class="cg-count">{{logs.length}}</span>
+        </header>
+        {{#if logs.length}}
+        <ol class="cg-log">
+          {{#each logs}}
+          <li class="{{kindClass}}">
+            <span class="cg-log-day">{{dayLabel}}</span>
+            <span>{{text}}</span>
+          </li>
+          {{/each}}
+        </ol>
+        {{else}}
+        <p class="cg-muted">No reports yet.</p>
+        {{/if}}
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if isSectors}}
+    <section class="cg-panel cg-full-panel">
+      <header class="cg-panel-head">
+        <div>
+          <p class="cg-eyebrow">INSTALLATION MAP</p>
+          <h2>Sectors</h2>
+        </div>
+        <span class="cg-muted">Sealed → Surveyed → Secured → Restored → Operational</span>
+      </header>
+      <div class="cg-sector-grid">
+        {{#each sectors}}
+        <article class="cg-sector-card {{stateClass}}">
+          <header>
+            <i class="{{icon}}" aria-hidden="true"></i>
+            <span class="cg-sector-state">{{stateLabel}}</span>
+          </header>
+          <h3>{{name}}</h3>
+          <p>{{condition}}</p>
+          <dl>
+            <div><dt>HAZARD</dt><dd>{{hazard}}</dd></div>
+            <div><dt>PROJECT</dt><dd>{{projectName}}</dd></div>
+          </dl>
+        </article>
+        {{/each}}
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if isProjects}}
+    <section class="cg-panel cg-full-panel">
+      <header class="cg-panel-head">
+        <div>
+          <p class="cg-eyebrow">WORK ORDER</p>
+          <h2>Projects</h2>
+        </div>
+        <span class="cg-muted">Activate a project to advance it one segment per day.</span>
+      </header>
+      <div class="cg-project-grid">
+        {{#each projects}}
+        <article class="cg-project-card {{statusClass}}">
+          <header>
+            <span class="cg-track">{{trackLabel}}</span>
+            <span class="cg-project-status {{statusClass}}">{{statusLabel}}</span>
+          </header>
+          <h3>{{name}}</h3>
+          <p>{{note}}</p>
+          <div class="cg-meter cg-meter--project" role="meter" aria-valuemin="0" aria-valuemax="{{segments}}" aria-valuenow="{{filled}}" aria-label="{{name}} progress">
+            <span style="--cg-progress: {{pct}}%"></span>
+          </div>
+          <p class="cg-project-meta">{{filled}}/{{segments}} <span class="cg-divider">//</span> {{costLabel}} <span class="cg-divider">//</span> {{checkLabel}}</p>
+          {{#if canManage}}
+          <footer>
+            {{#if isActive}}
+            <button type="button" class="cg-button cg-button--ghost" data-action="toggleProject" data-project-id="{{id}}"><i class="fa-solid fa-pause"></i> Pause</button>
+            {{/if}}
+            {{#if isAvailable}}
+            <button type="button" class="cg-button cg-button--primary" data-action="toggleProject" data-project-id="{{id}}"><i class="fa-solid fa-play"></i> Activate</button>
+            {{/if}}
+            {{#if isComplete}}
+            <span class="cg-complete-mark"><i class="fa-solid fa-check"></i> Complete</span>
+            {{/if}}
+          </footer>
+          {{/if}}
+        </article>
+        {{/each}}
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if isRoster}}
+    <section class="cg-panel cg-full-panel">
+      <header class="cg-panel-head">
+        <div>
+          <p class="cg-eyebrow">MUSTER</p>
+          <h2>Roster</h2>
+        </div>
+        <span class="cg-muted">{{roster.length}} souls on the books</span>
+      </header>
+      <div class="cg-roster-grid">
+        {{#each roster}}
+        <article class="cg-person">
+          <header>
+            <span class="cg-person-mark">{{name}}</span>
+            <span class="cg-person-pay">{{payLabel}}</span>
+          </header>
+          <h3>{{role}}</h3>
+          <p class="cg-person-unit">{{unit}}</p>
+          <div class="cg-morale" title="Morale {{morale}} of 5" aria-label="Morale {{morale}} of 5">
+            <small>MORALE</small>
+            <span>{{#each moralePips}}<i class="fa-solid fa-square {{#if filled}}is-full{{/if}}"></i>{{/each}}</span>
+          </div>
+          <p class="cg-person-note">{{note}}</p>
+        </article>
+        {{/each}}
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if isStores}}
+    <section class="cg-panel cg-full-panel">
+      <header class="cg-panel-head">
+        <div>
+          <p class="cg-eyebrow">SUPPLY</p>
+          <h2>Stores</h2>
+        </div>
+        {{#if canManage}}
+        <button type="button" class="cg-button cg-button--ghost" data-action="resupply"><i class="fa-solid fa-cart-flatbed"></i> Resupply · 25 gp</button>
+        {{/if}}
+      </header>
+      <div class="cg-store-grid">
+        {{#each stores}}
+        <article class="cg-store">
+          <div class="cg-store-top"><span>{{name}}</span><b>{{value}}/{{max}}</b></div>
+          <div class="cg-meter" role="meter" aria-valuemin="0" aria-valuemax="{{max}}" aria-valuenow="{{value}}" aria-label="{{name}} {{value}} of {{max}}">
+            <span style="--cg-progress: {{pct}}%"></span>
+          </div>
+          <small>{{unit}}</small>
+        </article>
+        {{/each}}
+      </div>
+      <div class="cg-store-note">
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+        A day consumes one food and water. A resupply run costs 25 gp and restores 5 days. Payroll is due every seventh day.
+      </div>
+    </section>
+    {{/if}}
+  </main>
+  {{/if}}
+
+  <footer class="cg-footer">
+    <span><i class="fa-solid fa-shield-halved"></i> {{name}} <span class="cg-divider">//</span> DAY {{day}}</span>
+    <span>{{#if autoOn}}LONG REST AUTO-ADVANCE ARMED{{else}}MANUAL ADVANCE ONLY{{/if}}</span>
+  </footer>
+</div>

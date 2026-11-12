@@ -1,0 +1,1254 @@
+/* Crimson Garrison — a field ledger for an abandoned coastal fort.
+   Olive, rust, stencilled labels, readiness meters, and a watch log. */
+
+.crimson-garrison .window-content {
+  padding: 0;
+  overflow: hidden;
+  color: #e6ddc4;
+  background: #11140f;
+}
+
+.crimson-garrison .cg-shell {
+  --cg-bg: #11140f;
+  --cg-panel: #1b2018;
+  --cg-panel-2: #232a1f;
+  --cg-line: #4d543c;
+  --cg-line-soft: #343b2c;
+  --cg-text: #e6ddc4;
+  --cg-muted: #a9aa8e;
+  --cg-dim: #7f846b;
+  --cg-gold: #d8ad62;
+  --cg-amber: #d69b4a;
+  --cg-red: #b95445;
+  --cg-green: #8aa671;
+  --cg-steel: #7b8a92;
+  --cg-rust: #8f4a2e;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--cg-text);
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(90% 60% at 50% -15%, #48512e55 0, transparent 58%),
+    radial-gradient(80% 60% at 105% 110%, #4a2b1eaa 0, transparent 62%),
+    repeating-linear-gradient(90deg, #ffffff05 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(0deg, transparent 0 38px, #ffffff04 38px 39px),
+    linear-gradient(180deg, #1b2118, #11140f 62%, #171a12);
+}
+
+.crimson-garrison .cg-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .24;
+  background:
+    radial-gradient(circle at 18px 0, transparent 12px, #bfa56b22 13px 14px, transparent 15px) 0 0/36px 32px,
+    radial-gradient(circle at 0 16px, transparent 12px, #bfa56b1c 13px 14px, transparent 15px) 18px 16px/36px 32px;
+  mask-image: linear-gradient(180deg, #000 0, transparent 70%);
+}
+
+.crimson-garrison .cg-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #00000066, transparent 7%, transparent 93%, #00000066),
+    linear-gradient(180deg, #00000022, transparent 18%, transparent 80%, #00000077);
+}
+
+.crimson-garrison .cg-header,
+.crimson-garrison .cg-status,
+.crimson-garrison .cg-tabs,
+.crimson-garrison .cg-body,
+.crimson-garrison .cg-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------- header */
+
+.crimson-garrison .cg-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px 13px;
+  border-bottom: 2px solid #596044;
+  background:
+    linear-gradient(180deg, #242b1eee, #171b13ee 70%, #141810ee),
+    repeating-linear-gradient(90deg, transparent 0 42px, #ffffff07 42px 43px);
+  box-shadow: 0 5px 18px #0007, inset 0 1px #ffffff10;
+}
+
+.crimson-garrison .cg-crest {
+  display: grid;
+  flex: none;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 2px solid #a9854d;
+  border-radius: 4px;
+  color: #e8c985;
+  background:
+    linear-gradient(145deg, #4d5a35, #262d1d 56%, #171b12);
+  box-shadow:
+    0 0 0 4px #171b12,
+    0 0 0 5px #596044,
+    inset 0 0 16px #f4b35e22,
+    0 4px 12px #0008;
+  clip-path: polygon(50% 0, 93% 12%, 93% 58%, 50% 100%, 7% 58%, 7% 12%);
+}
+
+.crimson-garrison .cg-crest i {
+  font-size: 25px;
+  filter: drop-shadow(0 2px 3px #000a);
+}
+
+.crimson-garrison .cg-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.crimson-garrison .cg-kicker {
+  margin: 0 0 3px;
+  color: #c5a46b;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .23em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-divider {
+  color: #a35c3c;
+  font-weight: 900;
+}
+
+.crimson-garrison h1 {
+  margin: 0;
+  border: 0;
+  color: #f2e4c7;
+  font-family: inherit;
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: .035em;
+  line-height: 1.05;
+  text-shadow: 0 2px 0 #1c1e13, 0 0 18px #d8ad6222;
+}
+
+.crimson-garrison .cg-sub {
+  margin: 4px 0 0;
+  color: #b7b391;
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.crimson-garrison .cg-sig {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 5px 0 0;
+  color: #8f9679;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-sig-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d69b4a;
+  box-shadow: 0 0 0 3px #d69b4a22, 0 0 8px #d69b4aaa;
+  animation: cg-pulse 2.8s ease-in-out infinite;
+}
+
+.crimson-garrison .cg-header-actions {
+  display: flex;
+  flex: none;
+  gap: 8px;
+  align-items: center;
+}
+
+/* --------------------------------------------------------------- buttons */
+
+.crimson-garrison .cg-button,
+.crimson-garrison .cg-auto,
+.crimson-garrison .cg-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 30px;
+  border: 1px solid #65704c;
+  border-radius: 2px;
+  color: #ece1c6;
+  background: linear-gradient(180deg, #3c462e, #252c1e);
+  box-shadow: inset 0 1px #ffffff1c, 0 2px 4px #0005;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+}
+
+.crimson-garrison .cg-button {
+  padding: 8px 12px;
+}
+
+.crimson-garrison .cg-button:hover,
+.crimson-garrison .cg-tab:hover,
+.crimson-garrison .cg-auto:hover {
+  border-color: #d3ae70;
+  color: #fff3d9;
+  background: linear-gradient(180deg, #54623d, #303923);
+}
+
+.crimson-garrison .cg-button:active,
+.crimson-garrison .cg-tab:active,
+.crimson-garrison .cg-auto:active {
+  transform: translateY(1px);
+}
+
+.crimson-garrison .cg-button--primary {
+  border-color: #c28d4c;
+  color: #20170b;
+  background: linear-gradient(180deg, #e0b56f, #b77f3e);
+  text-shadow: 0 1px #f7deb0;
+}
+
+.crimson-garrison .cg-button--primary:hover {
+  border-color: #f0d59b;
+  color: #140e06;
+  background: linear-gradient(180deg, #f0ca8a, #c9904b);
+}
+
+.crimson-garrison .cg-button--ghost {
+  color: #d8cba8;
+  background: #20261b;
+  border-color: #4d543c;
+}
+
+.crimson-garrison .cg-button i {
+  font-size: 11px;
+}
+
+/* --------------------------------------------------------------- status bar */
+
+.crimson-garrison .cg-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0;
+  border-bottom: 1px solid #3b4230;
+  background: #151910ee;
+  box-shadow: inset 0 -1px #ffffff08;
+}
+
+.crimson-garrison .cg-stat {
+  display: flex;
+  flex: 1 1 120px;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 118px;
+  padding: 10px 15px;
+  border-right: 1px solid #343b2c;
+}
+
+.crimson-garrison .cg-stat span {
+  color: #8e9477;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .2em;
+}
+
+.crimson-garrison .cg-stat strong {
+  color: #e9d9b4;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.crimson-garrison .cg-stat small {
+  margin-left: 2px;
+  color: #8d9278;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .03em;
+}
+
+.crimson-garrison .cg-auto {
+  flex: 2 1 250px;
+  justify-content: flex-start;
+  margin: 6px 7px 6px auto;
+  padding: 7px 11px;
+  border-color: #3f4733;
+  color: #a8ae91;
+  background: #1b2116;
+  text-align: left;
+}
+
+.crimson-garrison .cg-auto.is-on {
+  border-color: #9f7b43;
+  color: #ead4a4;
+  background: linear-gradient(180deg, #333b25, #20261a);
+  box-shadow: inset 0 0 0 1px #d8ad6218, 0 0 14px #d8ad620d;
+}
+
+.crimson-garrison .cg-auto i {
+  color: #d69b4a;
+  font-size: 16px;
+}
+
+.crimson-garrison .cg-auto span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.crimson-garrison .cg-auto b {
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-auto small {
+  color: #858b71;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------- tabs */
+
+.crimson-garrison .cg-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 7px 14px 0;
+  border-bottom: 1px solid #4d543c;
+  background: #171c13cc;
+}
+
+.crimson-garrison .cg-tab {
+  min-height: 31px;
+  padding: 8px 15px 7px;
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+  color: #a5ab8c;
+  background: transparent;
+  box-shadow: none;
+}
+
+.crimson-garrison .cg-tab.is-active {
+  border-color: #65704c;
+  color: #f5e7c9;
+  background: linear-gradient(180deg, #303923, #20261a);
+  box-shadow: inset 0 2px #d3ae70, 0 -2px 8px #0003;
+}
+
+/* --------------------------------------------------------------- body */
+
+.crimson-garrison .cg-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 14px;
+  scrollbar-color: #626b4d #151910;
+  scrollbar-width: thin;
+}
+
+.crimson-garrison .cg-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: 12px;
+}
+
+.crimson-garrison .cg-panel {
+  min-width: 0;
+  border: 1px solid #3e4632;
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, #1e2419ee, #171c13ee),
+    repeating-linear-gradient(0deg, transparent 0 27px, #ffffff04 27px 28px);
+  box-shadow: inset 0 1px #ffffff0b, 0 4px 14px #0003;
+}
+
+.crimson-garrison .cg-full-panel {
+  min-height: 100%;
+}
+
+.crimson-garrison .cg-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid #343b2c;
+  background: #20261a99;
+}
+
+.crimson-garrison .cg-eyebrow {
+  margin: 0 0 2px;
+  color: #a58c5d;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .21em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.crimson-garrison h2 {
+  margin: 0;
+  border: 0;
+  color: #eadbb9;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  line-height: 1.1;
+}
+
+.crimson-garrison h3 {
+  margin: 0;
+  border: 0;
+  color: #e4d5b4;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.crimson-garrison .cg-count {
+  display: inline-grid;
+  min-width: 25px;
+  height: 25px;
+  padding: 0 6px;
+  place-items: center;
+  border: 1px solid #596044;
+  border-radius: 50%;
+  color: #d3b477;
+  background: #171c13;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.crimson-garrison .cg-alert {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid #7e653f;
+  border-radius: 2px;
+  color: #e3c68f;
+  background: #302619;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-alert i {
+  font-size: 6px;
+}
+
+.crimson-garrison .cg-alert.is-green {
+  border-color: #687d56;
+  color: #bdcc9f;
+  background: #20281a;
+}
+
+.crimson-garrison .cg-alert.is-amber {
+  border-color: #9f7b43;
+  color: #e6c58e;
+  background: #302619;
+}
+
+.crimson-garrison .cg-alert.is-red {
+  border-color: #9e4d40;
+  color: #f0b7a6;
+  background: #321c18;
+}
+
+/* --------------------------------------------------------------- readiness */
+
+.crimson-garrison .cg-readiness {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 14px;
+}
+
+.crimson-garrison .cg-meter-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.crimson-garrison .cg-meter-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #c9c2a3;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-meter-label b {
+  color: #8f9679;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .04em;
+}
+
+.crimson-garrison .cg-meter {
+  position: relative;
+  height: 9px;
+  overflow: hidden;
+  border: 1px solid #3e4632;
+  border-radius: 1px;
+  background: #10140d;
+  box-shadow: inset 0 1px 3px #0008;
+}
+
+.crimson-garrison .cg-meter > span {
+  display: block;
+  width: var(--cg-progress, 0%);
+  height: 100%;
+  border-right: 1px solid #ffffff22;
+  background: linear-gradient(90deg, #7b4a2f, #c28a50);
+  box-shadow: 0 0 8px #c28a5033;
+  transition: width .35s ease;
+}
+
+.crimson-garrison .cg-meter.is-ready > span {
+  background: linear-gradient(90deg, #526d43, #9cb47e);
+}
+
+.crimson-garrison .cg-meter.is-partial > span {
+  background: linear-gradient(90deg, #8d6636, #d3a25b);
+}
+
+.crimson-garrison .cg-meter.is-critical > span {
+  background: linear-gradient(90deg, #71372e, #b95445);
+}
+
+.crimson-garrison .cg-meter--project {
+  height: 7px;
+}
+
+.crimson-garrison .cg-meter--project > span {
+  background: linear-gradient(90deg, #7b6038, #d2a55e);
+}
+
+/* --------------------------------------------------------------- active projects */
+
+.crimson-garrison .cg-next-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.crimson-garrison .cg-next-card {
+  padding: 11px 14px;
+  border-bottom: 1px solid #303728;
+}
+
+.crimson-garrison .cg-next-card:last-child {
+  border-bottom: 0;
+}
+
+.crimson-garrison .cg-next-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.crimson-garrison .cg-track {
+  color: #a58c5d;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-next-card h3 {
+  margin-bottom: 7px;
+}
+
+.crimson-garrison .cg-next-meta,
+.crimson-garrison .cg-project-meta {
+  margin: 6px 0 0;
+  color: #8f9679;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.crimson-garrison .cg-project-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border: 1px solid #4d543c;
+  border-radius: 2px;
+  color: #aeb394;
+  background: #171c13;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-project-status.is-active {
+  border-color: #9f7b43;
+  color: #e4c58d;
+  background: #2b2318;
+}
+
+.crimson-garrison .cg-project-status.is-complete {
+  border-color: #5f7650;
+  color: #b8c99e;
+  background: #1d2718;
+}
+
+/* --------------------------------------------------------------- sector summary */
+
+.crimson-garrison .cg-sector-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.crimson-garrison .cg-sector-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 14px;
+  border-bottom: 1px solid #2d3426;
+}
+
+.crimson-garrison .cg-sector-row:last-child {
+  border-bottom: 0;
+}
+
+.crimson-garrison .cg-sector-row > i {
+  width: 16px;
+  color: #a58c5d;
+  font-size: 12px;
+  text-align: center;
+}
+
+.crimson-garrison .cg-sector-row > div {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.crimson-garrison .cg-sector-row b {
+  overflow: hidden;
+  color: #d9cfb3;
+  font-size: 10px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crimson-garrison .cg-sector-row small {
+  overflow: hidden;
+  color: #7f866d;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crimson-garrison .cg-sector-state {
+  flex: none;
+  color: #9ca384;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-sector-row.is-sealed .cg-sector-state { color: #b95445; }
+.crimson-garrison .cg-sector-row.is-surveyed .cg-sector-state { color: #c49a58; }
+.crimson-garrison .cg-sector-row.is-secured .cg-sector-state { color: #8aa671; }
+.crimson-garrison .cg-sector-row.is-restored .cg-sector-state { color: #a9c18d; }
+.crimson-garrison .cg-sector-row.is-operational .cg-sector-state { color: #d8ad62; }
+
+/* --------------------------------------------------------------- log */
+
+.crimson-garrison .cg-log {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crimson-garrison .cg-log li {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 8px;
+  padding: 7px 14px;
+  border-bottom: 1px solid #2d3426;
+  color: #aaa98d;
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.crimson-garrison .cg-log li:last-child {
+  border-bottom: 0;
+}
+
+.crimson-garrison .cg-log-day {
+  color: #7f866d;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  line-height: 1.9;
+}
+
+.crimson-garrison .cg-log li.is-event { color: #d8b987; }
+.crimson-garrison .cg-log li.is-complete { color: #b9cb9f; }
+.crimson-garrison .cg-log li.is-warning { color: #d99a85; }
+.crimson-garrison .cg-log li.is-ledger { color: #c7b17e; }
+
+/* --------------------------------------------------------------- sectors tab */
+
+.crimson-garrison .cg-sector-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+}
+
+.crimson-garrison .cg-sector-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  padding: 11px;
+  border: 1px solid #3e4632;
+  border-top: 2px solid #596044;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #22291d, #191e16);
+  box-shadow: inset 0 1px #ffffff0b;
+}
+
+.crimson-garrison .cg-sector-card > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.crimson-garrison .cg-sector-card > header i {
+  color: #b9985e;
+  font-size: 16px;
+}
+
+.crimson-garrison .cg-sector-card h3 {
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.crimson-garrison .cg-sector-card > p {
+  margin: 0 0 8px;
+  color: #a4a68b;
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.crimson-garrison .cg-sector-card dl {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: auto 0 0;
+}
+
+.crimson-garrison .cg-sector-card dl > div {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 6px;
+}
+
+.crimson-garrison .cg-sector-card dt {
+  color: #777e66;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.crimson-garrison .cg-sector-card dd {
+  margin: 0;
+  color: #b1ae90;
+  font-size: 8.5px;
+  line-height: 1.3;
+}
+
+.crimson-garrison .cg-sector-card.is-sealed { border-top-color: #8f4036; }
+.crimson-garrison .cg-sector-card.is-surveyed { border-top-color: #a97b3c; }
+.crimson-garrison .cg-sector-card.is-secured { border-top-color: #677f52; }
+.crimson-garrison .cg-sector-card.is-restored { border-top-color: #8da274; }
+.crimson-garrison .cg-sector-card.is-operational { border-top-color: #d8ad62; }
+
+/* --------------------------------------------------------------- projects tab */
+
+.crimson-garrison .cg-project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+}
+
+.crimson-garrison .cg-project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border: 1px solid #3e4632;
+  border-left: 2px solid #596044;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #22291d, #191e16);
+}
+
+.crimson-garrison .cg-project-card.is-active { border-left-color: #c28d4c; }
+.crimson-garrison .cg-project-card.is-complete { border-left-color: #8da274; }
+
+.crimson-garrison .cg-project-card > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.crimson-garrison .cg-project-card h3 {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.crimson-garrison .cg-project-card > p {
+  margin: 0 0 9px;
+  color: #a4a68b;
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.crimson-garrison .cg-project-card footer {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid #303728;
+}
+
+.crimson-garrison .cg-complete-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #afc294;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------- roster */
+
+.crimson-garrison .cg-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+}
+
+.crimson-garrison .cg-person {
+  padding: 12px;
+  border: 1px solid #3e4632;
+  border-top: 2px solid #7d6741;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #22291d, #191e16);
+}
+
+.crimson-garrison .cg-person > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.crimson-garrison .cg-person-mark {
+  color: #d8ad62;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-person-pay {
+  color: #858b71;
+  font-size: 8px;
+}
+
+.crimson-garrison .cg-person h3 {
+  margin-bottom: 2px;
+}
+
+.crimson-garrison .cg-person-unit {
+  margin: 0 0 9px;
+  color: #858b71;
+  font-size: 8px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-morale {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  padding: 6px 0;
+  border-top: 1px solid #303728;
+  border-bottom: 1px solid #303728;
+}
+
+.crimson-garrison .cg-morale small {
+  color: #777e66;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.crimson-garrison .cg-morale span {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.crimson-garrison .cg-morale i {
+  color: #3f4733;
+  font-size: 9px;
+}
+
+.crimson-garrison .cg-morale i.is-full {
+  color: #b9985e;
+}
+
+.crimson-garrison .cg-person-note {
+  margin: 0;
+  color: #a4a68b;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------- stores */
+
+.crimson-garrison .cg-store-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+}
+
+.crimson-garrison .cg-store {
+  padding: 10px 11px;
+  border: 1px solid #3e4632;
+  border-radius: 2px;
+  background: #1d2319;
+}
+
+.crimson-garrison .cg-store-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+  color: #c9c2a3;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.crimson-garrison .cg-store-top b {
+  color: #d8ad62;
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.crimson-garrison .cg-store small {
+  display: block;
+  margin-top: 5px;
+  color: #7f866d;
+  font-size: 8px;
+}
+
+.crimson-garrison .cg-store-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 12px 12px;
+  padding: 9px 10px;
+  border: 1px solid #343b2c;
+  color: #8f9679;
+  background: #171c13;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.crimson-garrison .cg-store-note i {
+  margin-top: 1px;
+  color: #b9985e;
+}
+
+/* --------------------------------------------------------------- empty + footer */
+
+.crimson-garrison .cg-empty {
+  display: flex;
+  min-height: 280px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: #8f9679;
+  text-align: center;
+}
+
+.crimson-garrison .cg-empty > i {
+  color: #7d6741;
+  font-size: 30px;
+}
+
+.crimson-garrison .cg-empty h2 {
+  color: #d8c9a8;
+}
+
+.crimson-garrison .cg-empty p {
+  max-width: 440px;
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.crimson-garrison .cg-empty--small {
+  min-height: 110px;
+}
+
+.crimson-garrison .cg-empty--small > i {
+  font-size: 20px;
+}
+
+.crimson-garrison .cg-muted {
+  margin: 0;
+  padding: 12px 14px;
+  color: #7f866d;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.crimson-garrison .cg-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 14px;
+  border-top: 1px solid #3e4632;
+  color: #777e66;
+  background: #141810ee;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.crimson-garrison .cg-footer i {
+  color: #a58c5d;
+}
+
+/* --------------------------------------------------------------- chat card */
+
+.cg-chat-card {
+  --cg-chat-bg: #1b2018;
+  --cg-chat-line: #596044;
+  overflow: hidden;
+  border: 1px solid #596044;
+  border-radius: 3px;
+  color: #e6ddc4;
+  background:
+    linear-gradient(180deg, #252d20ee, #171c13ee),
+    repeating-linear-gradient(0deg, transparent 0 24px, #ffffff04 24px 25px);
+  box-shadow: inset 0 1px #ffffff10, 0 3px 10px #0005;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
+}
+
+.cg-chat-head {
+  padding: 9px 11px 8px;
+  border-bottom: 1px solid #596044;
+  background: #20271a;
+}
+
+.cg-chat-kicker {
+  display: block;
+  color: #c5a46b;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.cg-chat-kicker span {
+  color: #a35c3c;
+}
+
+.cg-chat-head h2 {
+  margin: 2px 0 0;
+  border: 0;
+  color: #f2e4c7;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.cg-chat-body {
+  padding: 9px 11px;
+}
+
+.cg-chat-line {
+  margin: 0 0 6px;
+  color: #b7b391;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.cg-chat-line:last-child {
+  margin-bottom: 0;
+}
+
+.cg-chat-line strong {
+  color: #e4d5b4;
+}
+
+.cg-chat-event {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 7px 0;
+  padding: 7px 8px;
+  border-left: 2px solid #b9985e;
+  background: #2d281b;
+}
+
+.cg-chat-event strong {
+  color: #e4c58d;
+  font-size: 10px;
+}
+
+.cg-chat-event span {
+  color: #b7b391;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.cg-chat-warning,
+.cg-chat-warning strong {
+  color: #d99a85;
+}
+
+.cg-chat-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 11px;
+  border-top: 1px solid #3e4632;
+  color: #777e66;
+  background: #141810;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.cg-chat-foot span:first-child {
+  color: #d69b4a;
+}
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 880px) {
+  .crimson-garrison .cg-overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .crimson-garrison .cg-sector-grid,
+  .crimson-garrison .cg-roster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .crimson-garrison .cg-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .crimson-garrison .cg-header-actions {
+    width: 100%;
+    padding-left: 72px;
+  }
+
+  .crimson-garrison .cg-status .cg-auto {
+    flex-basis: 100%;
+    margin: 0;
+    border-top: 1px solid #343b2c;
+  }
+
+  .crimson-garrison .cg-sector-grid,
+  .crimson-garrison .cg-project-grid,
+  .crimson-garrison .cg-roster-grid,
+  .crimson-garrison .cg-store-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .crimson-garrison .cg-tabs {
+    overflow-x: auto;
+  }
+
+  .crimson-garrison .cg-tab {
+    flex: none;
+  }
+}
+
+@keyframes cg-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 3px #d69b4a22, 0 0 8px #d69b4aaa; }
+  50% { opacity: .65; box-shadow: 0 0 0 5px #d69b4a11, 0 0 4px #d69b4a66; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crimson-garrison .cg-sig-dot {
+    animation: none;
+  }
+
+  .crimson-garrison .cg-meter > span {
+    transition: none;
+  }
+}

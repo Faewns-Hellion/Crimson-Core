@@ -1,0 +1,1119 @@
+/* Crimson Quest Board — charters nailed to a dragon-haunted guild board.
+   The layout keeps the Contract Network's rhythm: warded header, status
+   chips, search, parchment cards, sealed notes, and a ledger footer. */
+
+.crimson-quest-board .window-content {
+  padding: 0;
+  overflow: hidden;
+  color: #e8d3ad;
+  background: #0d0807;
+}
+
+.crimson-quest-board .cqb-shell {
+  --cqb-board: #140b09;
+  --cqb-board-2: #1d100d;
+  --cqb-iron: #4b2b20;
+  --cqb-iron-soft: #2a1712;
+  --cqb-gold: #d9aa68;
+  --cqb-gold-bright: #f1d39b;
+  --cqb-crimson: #a62c2a;
+  --cqb-crimson-deep: #681419;
+  --cqb-ink: #2e1a0f;
+  --cqb-ink-soft: #5f422d;
+  --cqb-ink-dim: #84654a;
+  --cqb-parchment: #e6d2ad;
+  --cqb-parchment-light: #f2e5c8;
+  --cqb-parchment-deep: #d1b486;
+  --cqb-text: #eeddc0;
+  --cqb-muted: #b79676;
+  --cqb-dim: #8d6e56;
+  --cqb-good: #719b6f;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--cqb-text);
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(90% 70% at 50% -8%, #501d1b55 0, transparent 55%),
+    radial-gradient(80% 65% at 105% 110%, #2d1710aa 0, transparent 62%),
+    repeating-linear-gradient(90deg, #00000018 0 1px, transparent 1px 82px),
+    repeating-linear-gradient(0deg, transparent 0 52px, #ffffff05 52px 53px),
+    linear-gradient(180deg, #1b0e0c, #0f0807 62%, #160c0a);
+}
+
+/* faint scale grain over the whole board */
+.crimson-quest-board .cqb-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .42;
+  background:
+    radial-gradient(circle at 12px 0, transparent 9px, #4b262355 10px 11px, transparent 12px) 0 0/24px 20px,
+    radial-gradient(circle at 0 10px, transparent 9px, #4b262344 10px 11px, transparent 12px) 12px 10px/24px 20px;
+  mask-image: linear-gradient(180deg, #000 0, transparent 72%);
+}
+
+.crimson-quest-board .cqb-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #00000055, transparent 8%, transparent 92%, #00000055),
+    linear-gradient(180deg, #00000022, transparent 20%, transparent 78%, #00000066);
+}
+
+.crimson-quest-board .cqb-header,
+.crimson-quest-board .cqb-toolbar,
+.crimson-quest-board .cqb-body,
+.crimson-quest-board .cqb-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------- header */
+
+.crimson-quest-board .cqb-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 20px 12px;
+  border-bottom: 2px solid #643727;
+  background:
+    linear-gradient(180deg, #2a1410ee, #190d0bee 68%, #160b09ee),
+    repeating-linear-gradient(90deg, transparent 0 36px, #ffffff07 36px 37px);
+  box-shadow: 0 5px 18px #0007, inset 0 1px #ffffff12;
+}
+
+.crimson-quest-board .cqb-crest {
+  display: grid;
+  flex: none;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 2px solid #b77c43;
+  border-radius: 50%;
+  color: #f0c984;
+  background:
+    radial-gradient(circle at 34% 24%, #932f2b, #4b1717 58%, #210b0c 100%);
+  box-shadow:
+    0 0 0 4px #190c0b,
+    0 0 0 5px #5e3726,
+    inset 0 0 16px #f4b35e33,
+    0 4px 12px #0008;
+}
+
+.crimson-quest-board .cqb-crest i {
+  font-size: 26px;
+  filter: drop-shadow(0 2px 3px #000a);
+}
+
+.crimson-quest-board .cqb-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.crimson-quest-board .cqb-kicker {
+  margin: 0 0 3px;
+  color: #d5a66b;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .23em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.crimson-quest-board .cqb-divider {
+  color: #a83232;
+  font-weight: 900;
+}
+
+.crimson-quest-board h1 {
+  margin: 0;
+  color: #f7e3bd;
+  font-family: inherit;
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: .035em;
+  line-height: 1.05;
+  border: 0;
+  text-shadow: 0 2px 0 #2b0e0c, 0 0 18px #e2a35b22;
+}
+
+.crimson-quest-board .cqb-sub {
+  margin: 4px 0 0;
+  color: #bc9b7b;
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.crimson-quest-board .cqb-sig {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  color: #c99d67;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.crimson-quest-board .cqb-sig-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d54c36;
+  box-shadow: 0 0 9px #d54c36, 0 0 2px #ffd1a1;
+  animation: cqb-candle 2.4s ease-in-out infinite;
+}
+
+@keyframes cqb-candle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .55; transform: scale(.82); }
+}
+
+.crimson-quest-board .cqb-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  flex: none;
+  justify-content: flex-end;
+  gap: 7px;
+  padding-left: 8px;
+}
+
+/* --------------------------------------------------------------- buttons */
+
+.crimson-quest-board .cqb-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 4px 11px;
+  border: 1px solid #7f5235;
+  border-radius: 2px;
+  color: #e8c38b;
+  background:
+    linear-gradient(180deg, #4a251d, #28130f 72%),
+    #2a1511;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .055em;
+  line-height: 1.2;
+  text-shadow: 0 1px #0008;
+  cursor: pointer;
+  box-shadow: inset 0 1px #ffffff12, 0 2px 4px #0004;
+}
+
+.crimson-quest-board .cqb-button:hover {
+  border-color: #d8a765;
+  color: #fff0cd;
+  background: linear-gradient(180deg, #693429, #351a14 72%);
+}
+
+.crimson-quest-board .cqb-button:focus-visible,
+.crimson-quest-board .cqb-icon-button:focus-visible,
+.crimson-quest-board .cqb-chip:focus-visible {
+  outline: 1px solid #f1d39b;
+  outline-offset: 2px;
+}
+
+.crimson-quest-board .cqb-button--primary {
+  border-color: #d09555;
+  color: #2a1009;
+  background: linear-gradient(180deg, #f0c17a, #b9753d 74%, #92532f);
+  text-shadow: 0 1px #ffe3b7;
+  box-shadow: inset 0 1px #ffedc9, 0 2px 5px #0005;
+}
+
+.crimson-quest-board .cqb-button--primary:hover {
+  color: #1d0a05;
+  background: linear-gradient(180deg, #ffd99a, #cf8950 74%, #a56439);
+}
+
+.crimson-quest-board .cqb-button--ghost {
+  color: #d4ae7d;
+  background: linear-gradient(180deg, #261411, #170c0a);
+  border-color: #5e3c2a;
+  box-shadow: inset 0 1px #ffffff0b;
+}
+
+.crimson-quest-board .cqb-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  border: 1px solid #9b7752;
+  border-radius: 2px;
+  color: #60422f;
+  background: #e3cda9;
+  font-size: 11px;
+  cursor: pointer;
+  box-shadow: inset 0 1px #fff6df88;
+}
+
+.crimson-quest-board .cqb-icon-button:hover {
+  color: #3c1d12;
+  border-color: #7e2b23;
+  background: #f1dfbd;
+}
+
+.crimson-quest-board .cqb-danger-button:hover {
+  color: #7f1818;
+  border-color: #9d2b25;
+  background: #f0d7b4;
+}
+
+/* --------------------------------------------------------------- toolbar */
+
+.crimson-quest-board .cqb-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-bottom: 1px solid #43261c;
+  background:
+    linear-gradient(180deg, #1d100d, #130a08),
+    repeating-linear-gradient(90deg, transparent 0 50px, #ffffff06 50px 51px);
+  box-shadow: inset 0 1px #ffffff0a;
+}
+
+.crimson-quest-board .cqb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.crimson-quest-board .cqb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 27px;
+  padding: 3px 8px;
+  border: 1px solid #5b3929;
+  border-radius: 2px;
+  color: #c1a07d;
+  background: #1a0e0b;
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: inset 0 1px #ffffff08;
+}
+
+.crimson-quest-board .cqb-chip b {
+  display: inline-grid;
+  min-width: 16px;
+  height: 16px;
+  place-items: center;
+  padding: 0 3px;
+  border: 1px solid #5c3a29;
+  border-radius: 8px;
+  color: #dfbb86;
+  background: #271510;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.crimson-quest-board .cqb-chip:hover {
+  color: #f2d5a6;
+  border-color: #9a6842;
+}
+
+.crimson-quest-board .cqb-chip.is-active {
+  color: #2b1109;
+  border-color: #e3b66d;
+  background: linear-gradient(180deg, #e5bd7b, #b77a42);
+  text-shadow: 0 1px #ffe5b7;
+}
+
+.crimson-quest-board .cqb-chip.is-active b {
+  color: #2b1109;
+  border-color: #7f4b2f;
+  background: #f8e2bc88;
+}
+
+.crimson-quest-board .cqb-search {
+  display: flex;
+  flex: 1 1 190px;
+  align-items: center;
+  gap: 7px;
+  max-width: 300px;
+  min-width: 160px;
+  margin-left: auto;
+  padding: 0 9px;
+  border: 1px solid #5d3b2a;
+  border-radius: 2px;
+  color: #a8754e;
+  background: #100907;
+  box-shadow: inset 0 2px 5px #0007;
+}
+
+.crimson-quest-board .cqb-search input {
+  flex: 1;
+  min-width: 0;
+  height: 29px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: #ecd7b5;
+  background: transparent;
+  font-family: inherit;
+  font-size: 11.5px;
+}
+
+.crimson-quest-board .cqb-search input::placeholder {
+  color: #7a5942;
+  font-style: italic;
+}
+
+.crimson-quest-board .cqb-kind {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #a77e59;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.crimson-quest-board .cqb-kind select {
+  width: 118px;
+  height: 29px;
+  padding: 2px 5px;
+  color: #d8b98f;
+  border: 1px solid #5d3b2a;
+  border-radius: 2px;
+  background: #140b09;
+  font-family: inherit;
+  font-size: 10.5px;
+}
+
+.crimson-quest-board .cqb-clear {
+  width: 29px;
+  min-height: 29px;
+  padding: 0;
+}
+
+/* --------------------------------------------------------------- body */
+
+.crimson-quest-board .cqb-body {
+  flex: 1;
+  min-height: 0;
+  padding: 14px 20px 22px;
+  overflow: auto;
+}
+
+.crimson-quest-board .cqb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  align-items: start;
+  gap: 14px;
+}
+
+/* --------------------------------------------------------------- cards */
+
+.crimson-quest-board .cqb-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 12px 14px 10px;
+  border: 1px solid #98744d;
+  border-radius: 2px 7px 2px 2px;
+  color: var(--cqb-ink);
+  background:
+    radial-gradient(ellipse at 14% -6%, #fff9e5bb, transparent 43%),
+    radial-gradient(ellipse at 105% 105%, #7c482522, transparent 50%),
+    repeating-linear-gradient(0deg, #5a341a08 0 1px, transparent 1px 4px),
+    linear-gradient(145deg, #f0e1c2 0%, #e4cfa9 56%, #d4b78b 100%);
+  box-shadow:
+    0 8px 18px #0008,
+    inset 0 0 28px #7d4f281c,
+    inset 0 1px #fff8e6aa;
+}
+
+.crimson-quest-board .cqb-card.is-failed {
+  opacity: .82;
+  filter: saturate(.75);
+}
+
+.crimson-quest-board .cqb-card::before,
+.crimson-quest-board .cqb-card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  opacity: .65;
+}
+
+/* a faded crease down the left edge */
+.crimson-quest-board .cqb-card::before {
+  top: 0;
+  bottom: 0;
+  left: 5px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, #855d392e 15%, #855d392e 85%, transparent);
+}
+
+/* a folded bottom-right corner */
+.crimson-quest-board .cqb-card::after {
+  right: 0;
+  bottom: 0;
+  width: 17px;
+  height: 17px;
+  background: linear-gradient(135deg, transparent 49%, #b9905e 50%, #d6bd92 100%);
+}
+
+.crimson-quest-board .cqb-nail {
+  position: absolute;
+  top: 7px;
+  z-index: 2;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f4efe5, #756552 46%, #332b22 100%);
+  box-shadow: 0 1px 2px #0008;
+}
+
+.crimson-quest-board .cqb-nail--left { left: 10px; }
+.crimson-quest-board .cqb-nail--right { right: 10px; }
+
+.crimson-quest-board .cqb-wax {
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  z-index: 3;
+  display: grid;
+  width: 53px;
+  height: 53px;
+  place-items: center;
+  padding: 7px;
+  border-radius: 50%;
+  color: #f5dbab;
+  background:
+    radial-gradient(circle at 35% 28%, #c95147 0, #9d2830 38%, #74151f 70%, #4d0b14 100%);
+  font-family: inherit;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 1.05;
+  text-align: center;
+  text-shadow: 0 1px 1px #30050a;
+  transform: rotate(-7deg);
+  box-shadow:
+    0 2px 0 #410a10,
+    0 4px 7px #0006,
+    inset 0 0 0 3px #ffffff1c,
+    inset 0 0 0 6px #61101b;
+}
+
+.crimson-quest-board .cqb-wax::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid #6f211f;
+  border-radius: 50%;
+  opacity: .8;
+}
+
+.crimson-quest-board .cqb-wax::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid #ffcf9c44;
+  border-radius: 50%;
+}
+
+.crimson-quest-board .cqb-wax span {
+  position: relative;
+  z-index: 1;
+}
+
+.crimson-quest-board .cqb-wax.is-claimed {
+  background: radial-gradient(circle at 35% 28%, #d7a15c, #a96e30 44%, #74451d 75%, #4d2a11);
+  text-shadow: 0 1px #3a1d08;
+  box-shadow: 0 2px 0 #42230d, 0 4px 7px #0006, inset 0 0 0 3px #ffffff1c, inset 0 0 0 6px #6f471f;
+}
+
+.crimson-quest-board .cqb-wax.is-completed {
+  background: radial-gradient(circle at 35% 28%, #8fb58a, #4f7c55 44%, #2f5739 75%, #1c3824);
+  text-shadow: 0 1px #0e2413;
+  box-shadow: 0 2px 0 #152b1b, 0 4px 7px #0006, inset 0 0 0 3px #ffffff1c, inset 0 0 0 6px #2b4e34;
+}
+
+.crimson-quest-board .cqb-wax.is-failed {
+  background: radial-gradient(circle at 35% 28%, #80635b, #553a35 44%, #382321 75%, #211313);
+  text-shadow: 0 1px #180b0b;
+  box-shadow: 0 2px 0 #1d0f0e, 0 4px 7px #0006, inset 0 0 0 3px #ffffff12, inset 0 0 0 6px #3a2522;
+}
+
+.crimson-quest-board .cqb-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  min-height: 19px;
+  padding-right: 58px;
+}
+
+.crimson-quest-board .cqb-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border: 1px solid #916a43;
+  border-radius: 2px;
+  color: #673726;
+  background: #eedcbb88;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.crimson-quest-board .cqb-type i {
+  color: #8e2b26;
+  font-size: 8px;
+}
+
+.crimson-quest-board .cqb-draft {
+  padding: 2px 5px;
+  border: 1px dashed #9c4835;
+  border-radius: 2px;
+  color: #8d2b21;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.crimson-quest-board .cqb-posted {
+  margin-left: auto;
+  color: #856449;
+  font-size: 8.5px;
+  font-style: italic;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+.crimson-quest-board .cqb-card h2 {
+  margin: 7px 0 5px;
+  padding-right: 52px;
+  color: #34160d;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .008em;
+  line-height: 1.1;
+  border: 0;
+  text-shadow: 0 1px #fff6e0;
+}
+
+.crimson-quest-board .cqb-summary {
+  margin: 0 0 8px;
+  color: #4e3423;
+  font-size: 11.5px;
+  line-height: 1.42;
+}
+
+.crimson-quest-board .cqb-ledger {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+  gap: 6px 10px;
+  margin: 0 0 8px;
+  padding: 7px 0;
+  border-top: 1px solid #a8865e;
+  border-bottom: 1px solid #a8865e;
+}
+
+.crimson-quest-board .cqb-ledger dt {
+  color: #806043;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  line-height: 1.2;
+}
+
+.crimson-quest-board .cqb-ledger dd {
+  margin: 2px 0 0;
+  color: #3c2416;
+  font-size: 10px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.crimson-quest-board .cqb-ledger dd small {
+  display: block;
+  margin-top: 1px;
+  color: #7c4c36;
+  font-size: 8.5px;
+  font-style: italic;
+  line-height: 1.25;
+}
+
+.crimson-quest-board .cqb-reward {
+  color: #7c1d1a !important;
+  font-weight: 800;
+}
+
+.crimson-quest-board .cqb-card-mid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 10px;
+  margin-top: auto;
+  padding-top: 1px;
+}
+
+.crimson-quest-board .cqb-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #5d3e29;
+}
+
+.crimson-quest-board .cqb-danger small {
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.crimson-quest-board .cqb-claws {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.crimson-quest-board .cqb-claw {
+  display: inline-block;
+  width: 7px;
+  height: 10px;
+  background: #b8a083;
+  clip-path: polygon(50% 0, 100% 100%, 50% 76%, 0 100%);
+}
+
+.crimson-quest-board .cqb-claw.is-full {
+  background: #a52b2a;
+  filter: drop-shadow(0 0 2px #a52b2a66);
+}
+
+.crimson-quest-board .cqb-status {
+  padding: 1px 5px;
+  border: 1px solid currentColor;
+  color: #6f553d;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.crimson-quest-board .cqb-status.is-open { color: #8b5d1e; }
+.crimson-quest-board .cqb-status.is-claimed { color: #a44f25; }
+.crimson-quest-board .cqb-status.is-completed { color: #427346; }
+.crimson-quest-board .cqb-status.is-failed { color: #8d2e2a; }
+
+.crimson-quest-board .cqb-claimed {
+  max-width: 100%;
+  overflow: hidden;
+  color: #5d3c2b;
+  font-size: 9px;
+  font-style: italic;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crimson-quest-board .cqb-claimed i {
+  color: #8c3129;
+  font-size: 8px;
+}
+
+/* --------------------------------------------------------------- charter details */
+
+.crimson-quest-board .cqb-charter {
+  margin-top: 7px;
+  border-top: 1px dashed #b3946d;
+}
+
+.crimson-quest-board .cqb-charter summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0 3px;
+  color: #733826;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .035em;
+  list-style: none;
+  cursor: pointer;
+}
+
+.crimson-quest-board .cqb-charter summary::-webkit-details-marker { display: none; }
+
+.crimson-quest-board .cqb-charter summary:hover { color: #9b2e24; }
+
+.crimson-quest-board .cqb-charter summary i {
+  font-size: 8px;
+  transition: transform .16s ease;
+}
+
+.crimson-quest-board .cqb-charter[open] summary i { transform: rotate(180deg); }
+
+.crimson-quest-board .cqb-charter-body {
+  padding: 2px 0 3px;
+}
+
+.crimson-quest-board .cqb-objectives {
+  margin: 4px 0 6px;
+  padding-left: 8px;
+  border-left: 2px solid #a52b2a;
+  color: #4a3223;
+  font-size: 10.5px;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.crimson-quest-board .cqb-tagline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin: 5px 0;
+}
+
+.crimson-quest-board .cqb-tagline span {
+  padding: 1px 5px;
+  border: 1px solid #b19068;
+  border-radius: 2px;
+  color: #6d4a33;
+  background: #efe0c4;
+  font-size: 8.5px;
+  line-height: 1.25;
+}
+
+.crimson-quest-board .cqb-gm-note {
+  margin: 6px 0 2px;
+  padding: 6px 7px;
+  border: 1px solid #8e3c31;
+  border-radius: 2px;
+  color: #5f1f1a;
+  background: #e5cdb0;
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.crimson-quest-board .cqb-gm-note strong {
+  display: block;
+  margin-bottom: 2px;
+  color: #84241d;
+  font-size: 7.5px;
+  letter-spacing: .15em;
+}
+
+.crimson-quest-board .cqb-gm-note p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.crimson-quest-board .cqb-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid #b3946c;
+}
+
+.crimson-quest-board .cqb-card-actions .cqb-button {
+  min-height: 26px;
+  padding: 3px 8px;
+  font-size: 9px;
+}
+
+.crimson-quest-board .cqb-card-actions .cqb-icon-button {
+  width: 26px;
+  height: 26px;
+}
+
+/* --------------------------------------------------------------- empty */
+
+.crimson-quest-board .cqb-empty {
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+  padding: 30px;
+  border: 1px dashed #68432f;
+  border-radius: 3px;
+  color: #b99675;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, #4a1b1833, transparent 62%),
+    #180d0b99;
+}
+
+.crimson-quest-board .cqb-empty i {
+  margin-bottom: 8px;
+  color: #a94a36;
+  font-size: 32px;
+  filter: drop-shadow(0 2px 4px #0007);
+}
+
+.crimson-quest-board .cqb-empty h2 {
+  margin: 0;
+  color: #e5c69d;
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  border: 0;
+}
+
+.crimson-quest-board .cqb-empty p {
+  max-width: 470px;
+  margin: 6px 0 0;
+  color: #a8876a;
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+/* --------------------------------------------------------------- footer */
+
+.crimson-quest-board .cqb-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 7px 16px;
+  padding: 7px 20px;
+  border-top: 1px solid #4d2c20;
+  color: #9e7e62;
+  background:
+    linear-gradient(180deg, #1b0e0b, #100806),
+    repeating-linear-gradient(90deg, transparent 0 44px, #ffffff05 44px 45px);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.crimson-quest-board .cqb-foot-status {
+  color: #c79b66;
+}
+
+.crimson-quest-board .cqb-footer i {
+  margin-right: 3px;
+  color: #b34a37;
+}
+
+/* --------------------------------------------------------------- form */
+
+.crimson-quest-board .cqb-charter-sheet {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 18px 14px;
+  border: 1px solid #8e6b46;
+  border-radius: 2px 8px 2px 2px;
+  color: var(--cqb-ink);
+  background:
+    radial-gradient(ellipse at 12% -5%, #fff8e2bb, transparent 40%),
+    radial-gradient(ellipse at 100% 105%, #7c482522, transparent 52%),
+    repeating-linear-gradient(0deg, #5a341a08 0 1px, transparent 1px 4px),
+    linear-gradient(145deg, #f0e1c2, #dfc8a1 60%, #d2b487);
+  box-shadow: 0 10px 26px #0008, inset 0 0 34px #7d4f281c;
+}
+
+.crimson-quest-board .cqb-charter-sheet::before,
+.crimson-quest-board .cqb-charter-sheet::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f4efe5, #756552 46%, #332b22);
+  box-shadow: 0 1px 2px #0008;
+}
+
+.crimson-quest-board .cqb-charter-sheet::before { left: 11px; }
+.crimson-quest-board .cqb-charter-sheet::after { right: 11px; }
+
+.crimson-quest-board .cqb-sheet-head {
+  margin-bottom: 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #a8865e;
+}
+
+.crimson-quest-board .cqb-sheet-head .cqb-kicker {
+  color: #7d4b32;
+  font-size: 8px;
+}
+
+.crimson-quest-board .cqb-sheet-head h2 {
+  margin: 3px 0;
+  color: #3a180d;
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  border: 0;
+}
+
+.crimson-quest-board .cqb-sheet-head p {
+  margin: 0;
+  color: #6e4f38;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.crimson-quest-board .cqb-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.crimson-quest-board .cqb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  color: #6c4932;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.crimson-quest-board .cqb-field--wide { grid-column: span 2; }
+
+.crimson-quest-board .cqb-field input,
+.crimson-quest-board .cqb-field select,
+.crimson-quest-board .cqb-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid #a5825b;
+  border-radius: 2px;
+  color: #2d1a11;
+  background: #f2e4c9;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: inset 0 1px 3px #6d4a2420;
+}
+
+.crimson-quest-board .cqb-field input::placeholder,
+.crimson-quest-board .cqb-field textarea::placeholder {
+  color: #9a7d5c;
+  font-style: italic;
+}
+
+.crimson-quest-board .cqb-field textarea {
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.crimson-quest-board .cqb-field input:focus,
+.crimson-quest-board .cqb-field select:focus,
+.crimson-quest-board .cqb-field textarea:focus {
+  outline: 0;
+  border-color: #8e2f24;
+  box-shadow: 0 0 0 1px #8e2f2455, inset 0 1px 3px #6d4a2420;
+}
+
+.crimson-quest-board .cqb-gm-field { color: #7a2b20; }
+
+.crimson-quest-board .cqb-gm-field textarea {
+  border-color: #9b4b3c;
+  background: #ead4b4;
+}
+
+.crimson-quest-board .cqb-check {
+  display: inline-flex;
+  grid-column: span 2;
+  align-items: center;
+  gap: 7px;
+  color: #5a3b28;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.crimson-quest-board .cqb-check input {
+  width: 14px;
+  height: 14px;
+  accent-color: #8e2f24;
+}
+
+.crimson-quest-board .cqb-error {
+  margin: 10px 0 0;
+  padding: 7px 9px;
+  border: 1px solid #a84a44;
+  border-radius: 2px;
+  color: #6d1716;
+  background: #e6c4a8;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.crimson-quest-board .cqb-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid #a8865e;
+}
+
+.crimson-quest-board .cqb-form-footer .cqb-button--ghost {
+  color: #5b3a28;
+  background: #e2cba6;
+  border-color: #a17c54;
+  box-shadow: inset 0 1px #fff3d6;
+}
+
+.crimson-quest-board .cqb-form-footer .cqb-button--ghost:hover {
+  color: #381b10;
+  background: #f0ddba;
+  border-color: #8e2f24;
+}
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 760px) {
+  .crimson-quest-board .cqb-grid { grid-template-columns: minmax(0, 1fr); }
+  .crimson-quest-board .cqb-form-grid { grid-template-columns: 1fr 1fr; }
+  .crimson-quest-board .cqb-field--wide,
+  .crimson-quest-board .cqb-check { grid-column: span 2; }
+  .crimson-quest-board .cqb-header { flex-wrap: wrap; align-items: flex-start; }
+  .crimson-quest-board .cqb-header-actions { width: 100%; justify-content: flex-start; padding: 0 0 0 72px; }
+  .crimson-quest-board .cqb-search { max-width: none; flex-basis: 100%; margin-left: 0; order: 4; }
+  .crimson-quest-board .cqb-kind { margin-left: auto; }
+  .crimson-quest-board .cqb-header h1 { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crimson-quest-board .cqb-sig-dot,
+  .crimson-quest-board .cqb-charter summary i {
+    animation: none !important;
+    transition: none !important;
+  }
+}

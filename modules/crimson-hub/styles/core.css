@@ -1,0 +1,39 @@
+/* Crimson Core: static sci-fi skin shared by the Crimson module windows. */
+body.theme-scifi :is(.crimson-feats,.crimson-icons-library,.crimson-drafts,.crimson-forge,.cb-reveal,.cb-menu-art) {
+  --cf-bg:#141e33;--cf-panel:#232b46;--cf-line:#536489;--cf-text:#e5f0fb;--cf-muted:#aebed7;--cf-red:#8fe0ef;--cf-gold:#c4a3e7;
+  --ci-bg:#141e33;--ci-panel:#232b46;--ci-line:#536489;--ci-text:#e5f0fb;--ci-muted:#aebed7;
+  --cd-bg:#141e33;--cd-panel:#232b46;--cd-line:#536489;--cd-text:#e5f0fb;--cd-muted:#aebed7;
+  color:#e5f0fb;
+}
+body.theme-scifi :is(.crimson-feats,.crimson-icons-library,.crimson-drafts,.crimson-forge) :is(.window-content,.cf-sidebar,.cf-main,.ci-shell,.cd-shell,.forge-body),
+body.theme-scifi :is(.cb-menu-art,.cb-reveal-panel) {
+  background:linear-gradient(130deg,#163149,#1e203b 48%,#43283f) !important;
+  color:#e5f0fb;border-color:#7b80ac;
+}
+body.theme-scifi :is(.crimson-feats,.crimson-icons-library,.crimson-drafts,.crimson-forge) :is(h1,h2,h3,.cf-heading,.cf-brand,.ci-shell>header small,.cd-shell>header small),
+body.theme-scifi :is(.cb-menu-art h2,.cb-eyebrow) {color:#b9eaf6;}
+body.theme-scifi :is(.crimson-feats,.crimson-icons-library,.crimson-drafts,.crimson-forge,.cb-reveal-panel) :is(button,.button) {
+  background:linear-gradient(110deg,#20445a,#37325a 60%,#53374f);color:#e7f5ff;border-color:#687da3;
+}
+body.theme-scifi :is(.crimson-feats,.crimson-icons-library,.crimson-drafts,.crimson-forge) :is(input,select,textarea) {
+  background:#121c30 !important;color:#e5f0fb !important;border-color:#546787 !important;
+}
+body.theme-scifi .cb-reveal {backdrop-filter:none;background:#0d1424e8;}
+body.theme-scifi .cb-reveal-panel {box-shadow:0 8px 28px #0006;}
+
+/* Standard D&D sheet: make the current mode impossible to miss.
+   The system marks the window .editable (edit mode), .interactable (play mode)
+   or .locked (no permission); these rules put a banner and a border on it. */
+/* The label is a real element added to the title bar by spellbook-button.mjs.
+   Do NOT style the sheet's own ::before/::after here: the system uses them for
+   the class artwork behind the sheet, and overriding them breaks the layout. */
+.application.dnd5e2.sheet.actor.editable:not(.minimized) {outline:3px solid #ffb84d; outline-offset:-1px;}
+.crimson-mode-label {
+  flex:none; align-self:center; margin:0 8px; padding:1px 10px; border-radius:12px; white-space:nowrap;
+  font:700 11px/1.7 var(--font-primary,sans-serif); letter-spacing:.12em; pointer-events:none;
+}
+.crimson-mode-label.is-edit {background:#ffb84d; color:#1b1206;}
+.crimson-mode-label.is-locked {background:#59607a; color:#fff;}
+.application.minimized .crimson-mode-label {display:none;}
+/* Spellbook button added to the Inventory tab by Crimson Core. */
+.crimson-spellbook-button.is-fallback {width:auto; margin:0 0 6px; padding:4px 12px;}

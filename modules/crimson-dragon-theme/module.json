@@ -1,0 +1,30 @@
+{
+  "id": "crimson-dragon-theme",
+  "title": "Crimson Dragon — Interface Theme",
+  "description": "Obsidian, crimson, and hoard-gold skin for the full in-world Foundry interface.",
+  "version": "1.0.1",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.368",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "Local Custom Theme"
+    }
+  ],
+  "styles": [
+    "crimson-dragon.css"
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "crimson-hub",
+        "type": "module",
+        "compatibility": {
+          "minimum": "1.1.0"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,2257 @@
+/* Crimson Tyrant — Crimson Fantasy Armory
+   Hoard record in place of the character sheet: iron plate, gold filigree, scale grain.
+   Fifteen dragon palettes (chromatic, gem, metallic) plus custom colours from the picker. */
+
+/* Atkinson Hyperlegible Next is the reading face, shipped with the world in
+   modules/crimson-fantasy-armory/fonts/ so no outside font service is used. */
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:normal;font-weight:400;font-display:swap;src:url("/modules/crimson-fantasy-armory/fonts/atkinson-regular.woff2") format("woff2"),url("../fonts/atkinson-regular.woff2") format("woff2");}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:italic;font-weight:400;font-display:swap;src:url("/modules/crimson-fantasy-armory/fonts/atkinson-italic.woff2") format("woff2"),url("../fonts/atkinson-italic.woff2") format("woff2");}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:normal;font-weight:700;font-display:swap;src:url("/modules/crimson-fantasy-armory/fonts/atkinson-bold.woff2") format("woff2"),url("../fonts/atkinson-bold.woff2") format("woff2");}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:italic;font-weight:700;font-display:swap;src:url("/modules/crimson-fantasy-armory/fonts/atkinson-bolditalic.woff2") format("woff2"),url("../fonts/atkinson-bolditalic.woff2") format("woff2");}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:normal;font-weight:800 900;font-display:swap;src:url("/modules/crimson-fantasy-armory/fonts/atkinson-extrabold.woff2") format("woff2"),url("../fonts/atkinson-extrabold.woff2") format("woff2");}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:italic;font-weight:800 900;font-display:swap;src:url("/modules/crimson-fantasy-armory/fonts/atkinson-extrabolditalic.woff2") format("woff2"),url("../fonts/atkinson-extrabolditalic.woff2") format("woff2");}
+
+.crimson-fantasy-armory {
+  --dr-font: "Atkinson Hyperlegible Next", "Signika", sans-serif;
+  --dr-bg: #140a09;
+  --dr-panel: #1e100d;
+  --dr-panel-2: #291511;
+  --dr-line: #5a2a22;
+  --dr-accent: #c8503c;
+  --dr-accent-2: #ffb347;
+  --dr-text: #f2e2d8;
+  --dr-dim: #b7958a;
+  --dr-head: #2a1310;
+}
+
+.crimson-fantasy-armory .window-content {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  background: var(--dr-bg);
+}
+
+.crimson-fantasy-armory .window-content > [data-application-part="armory"] {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------- shell */
+
+.crimson-fantasy-armory .armory-shell {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  color: var(--dr-text);
+  font-family: var(--dr-font);
+  font-synthesis: none;
+  background:
+    radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--dr-accent) 18%, transparent), transparent 62%),
+    radial-gradient(90% 60% at 12% 108%, color-mix(in srgb, var(--dr-accent-2) 12%, transparent), transparent 70%),
+    linear-gradient(175deg, color-mix(in srgb, var(--dr-bg) 82%, #000) 0%, var(--dr-bg) 55%, color-mix(in srgb, var(--dr-bg) 88%, #000) 100%);
+}
+
+.crimson-fantasy-armory .armory-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--dr-accent) 12%, transparent), transparent 22%, transparent 78%, color-mix(in srgb, var(--dr-accent) 12%, transparent)),
+    radial-gradient(120% 100% at 50% 50%, transparent 62%, #00000066 100%);
+}
+
+.crimson-fantasy-armory .armory-head,
+.crimson-fantasy-armory .armory-body,
+.crimson-fantasy-armory .armory-foot { position: relative; z-index: 1; }
+
+.crimson-fantasy-armory .armory-nav { position: relative; z-index: 5; }
+
+/* --------------------------------------------------------------- header */
+
+.crimson-fantasy-armory .armory-head {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: stretch;
+  padding: 14px 16px 12px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--dr-head) 88%, transparent), color-mix(in srgb, var(--dr-bg) 92%, transparent));
+  border-bottom: 2px solid var(--dr-accent);
+  box-shadow: inset 0 -8px 14px #00000059, 0 8px 20px #00000066;
+}
+
+.crimson-fantasy-armory .armory-portrait {
+  position: relative;
+  margin: 0;
+  width: 118px;
+  height: 118px;
+  overflow: hidden;
+  background: var(--dr-bg);
+  border: 2px solid var(--dr-accent-2);
+  outline: 1px solid var(--dr-line);
+  outline-offset: 3px;
+  border-radius: 4px 14px 4px 14px;
+}
+
+.crimson-fantasy-armory .armory-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.12) contrast(1.04);
+}
+
+.crimson-fantasy-armory .armory-portrait figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2px 4px;
+  background: color-mix(in srgb, var(--dr-bg) 82%, transparent);
+  color: var(--dr-accent-2);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.crimson-fantasy-armory .armory-id {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.crimson-fantasy-armory .armory-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--dr-dim);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  white-space: nowrap;
+}
+
+.crimson-fantasy-armory .armory-seal {
+  flex: none;
+  padding: 1px 7px;
+  color: var(--dr-accent-2);
+  border: 1px solid color-mix(in srgb, var(--dr-accent-2) 55%, transparent);
+  background: color-mix(in srgb, var(--dr-accent) 18%, transparent);
+  letter-spacing: 0.16em;
+}
+
+.crimson-fantasy-armory .armory-name {
+  margin: 0;
+  width: 100%;
+  padding: 0 0 3px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--dr-line);
+  border-radius: 0;
+  color: #fff6ee;
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-shadow: 0 1px 0 #000, 0 0 18px color-mix(in srgb, var(--dr-accent) 45%, transparent);
+}
+
+.crimson-fantasy-armory input.armory-name:focus {
+  outline: none;
+  border-bottom-color: var(--dr-accent-2);
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--dr-accent-2) 30%, transparent);
+}
+
+.crimson-fantasy-armory .armory-sub {
+  margin: 0;
+  color: var(--dr-accent-2);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.crimson-fantasy-armory .armory-dot { color: var(--dr-accent); }
+
+.crimson-fantasy-armory .armory-hp {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3px;
+}
+
+.crimson-fantasy-armory .armory-hp-bar {
+  position: relative;
+  flex: 1;
+  height: 15px;
+  background: color-mix(in srgb, var(--dr-bg) 80%, #000);
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.crimson-fantasy-armory .armory-hp-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--dr-accent), var(--dr-accent-2));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--dr-accent) 60%, transparent);
+}
+
+.crimson-fantasy-armory .armory-hp-read {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.crimson-fantasy-armory .armory-hp-read input,
+.crimson-fantasy-armory .armory-chip input {
+  width: 56px;
+  padding: 2px 4px;
+  background: color-mix(in srgb, var(--dr-bg) 78%, #000);
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  color: #fff6ee;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-hp-max {
+  color: var(--dr-dim);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.crimson-fantasy-armory .armory-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 7px;
+  color: var(--dr-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  border: 1px solid var(--dr-line);
+  background: color-mix(in srgb, var(--dr-panel) 70%, transparent);
+  border-radius: 3px;
+}
+
+.crimson-fantasy-armory .armory-chip input { width: 44px; font-size: 13px; }
+
+/* gauges */
+
+.crimson-fantasy-armory .armory-gauges {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.crimson-fantasy-armory .armory-gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 68px;
+  padding: 8px 10px;
+  background: linear-gradient(180deg, var(--dr-panel-2), var(--dr-panel));
+  border: 1px solid var(--dr-line);
+  border-radius: 4px 10px 4px 10px;
+  color: var(--dr-text);
+  font-family: inherit;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--dr-accent-2) 22%, transparent);
+}
+
+.crimson-fantasy-armory .armory-gauge-label {
+  color: var(--dr-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.crimson-fantasy-armory .armory-gauge-value {
+  color: #fff6ee;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-gauge-value small { font-size: 10px; margin-left: 2px; color: var(--dr-dim); }
+
+.crimson-fantasy-armory .armory-gauge--ac {
+  min-width: 74px;
+  aspect-ratio: 1;
+  border: 2px solid var(--dr-accent-2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--dr-accent) 40%, transparent), var(--dr-panel));
+}
+
+.crimson-fantasy-armory .armory-gauge--ac .armory-gauge-value { color: var(--dr-accent-2); font-size: 26px; }
+
+.crimson-fantasy-armory .armory-gauge--button { cursor: pointer; }
+
+.crimson-fantasy-armory .armory-gauge--button:hover .armory-gauge-value { color: var(--dr-accent-2); }
+
+.crimson-fantasy-armory .armory-gauge--wealth .armory-gauge-value { color: var(--dr-accent-2); font-size: 18px; }
+
+/* ------------------------------------------------------------------ nav */
+
+.crimson-fantasy-armory .armory-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  padding: 8px 16px 0;
+  background: color-mix(in srgb, var(--dr-bg) 78%, #000);
+  border-bottom: 1px solid var(--dr-line);
+}
+
+.crimson-fantasy-armory .armory-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px 7px;
+  background: linear-gradient(180deg, var(--dr-panel-2), var(--dr-panel));
+  border: 1px solid var(--dr-line);
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  color: var(--dr-dim);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-nav-tab i { color: var(--dr-accent); font-size: 12px; }
+
+.crimson-fantasy-armory .armory-nav-tab:hover { color: #fff6ee; border-color: var(--dr-accent-2); }
+
+.crimson-fantasy-armory .armory-nav-tab.is-active {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dr-accent) 32%, var(--dr-panel-2)), var(--dr-panel));
+  color: #fff6ee;
+  border-color: var(--dr-accent-2);
+  box-shadow: inset 0 3px 0 var(--dr-accent-2);
+}
+
+.crimson-fantasy-armory .armory-nav-tab span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.crimson-fantasy-armory .armory-nav-tab.is-active i { color: var(--dr-accent-2); }
+
+.crimson-fantasy-armory .armory-nav-tail {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding-bottom: 6px;
+}
+
+.crimson-fantasy-armory .armory-rest {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 29px;
+  background: var(--dr-panel);
+  border: 1px solid var(--dr-line);
+  border-radius: 5px;
+  color: var(--dr-accent-2);
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-rest:hover { border-color: var(--dr-accent-2); color: #fff6ee; background: var(--dr-panel-2); }
+
+/* ----------------------------------------------------------------- body */
+
+.crimson-fantasy-armory .armory-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: 12px 16px;
+  overflow: hidden;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dr-bg) 92%, transparent), color-mix(in srgb, var(--dr-bg) 74%, transparent));
+}
+
+.crimson-fantasy-armory .armory-page {
+  display: none;
+  height: 100%;
+  overflow: auto;
+  scrollbar-color: var(--dr-line) color-mix(in srgb, var(--dr-bg) 80%, #000);
+}
+
+.crimson-fantasy-armory .armory-page.is-active { display: block; }
+
+.crimson-fantasy-armory .armory-page-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.crimson-fantasy-armory .armory-hint {
+  margin: 0;
+  color: var(--dr-dim);
+  font-size: 11px;
+  font-style: italic;
+}
+
+.crimson-fantasy-armory .armory-core-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 12px;
+}
+
+.crimson-fantasy-armory .armory-panel {
+  position: relative;
+  padding: 11px 13px 13px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--dr-panel-2) 92%, transparent), var(--dr-panel));
+  border: 1px solid var(--dr-line);
+  border-radius: 5px 14px 5px 14px;
+  box-shadow: 4px 5px 0 #00000059, inset 0 1px 0 color-mix(in srgb, var(--dr-accent-2) 16%, transparent);
+}
+
+.crimson-fantasy-armory .armory-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12px;
+  width: 54px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--dr-accent-2), transparent);
+}
+
+.crimson-fantasy-armory .armory-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 0 0 6px;
+  border: 0;
+  border-bottom: 1px solid var(--dr-line);
+  color: #fff6ee;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.crimson-fantasy-armory .armory-panel-title i { color: var(--dr-accent); }
+
+.crimson-fantasy-armory .armory-panel-title small {
+  margin-left: auto;
+  color: var(--dr-dim);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.crimson-fantasy-armory .armory-list-title {
+  margin: 0 0 8px;
+  padding-bottom: 4px;
+  border: 0;
+  border-bottom: 1px dashed var(--dr-line);
+  color: var(--dr-accent-2);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+/* abilities */
+
+.crimson-fantasy-armory .armory-abilities {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.crimson-fantasy-armory .armory-ability {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px 6px;
+  background: linear-gradient(180deg, var(--dr-panel), color-mix(in srgb, var(--dr-bg) 70%, #000));
+  border: 1px solid var(--dr-line);
+  border-radius: 10px 3px 10px 3px;
+  box-shadow: inset 0 3px 0 var(--dr-accent);
+}
+
+.crimson-fantasy-armory .armory-ability-label {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  color: var(--dr-accent-2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.crimson-fantasy-armory .armory-ability-mod {
+  color: #fff6ee;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.crimson-fantasy-armory .armory-ability-input {
+  width: 100%;
+  max-width: 46px;
+  padding: 1px 2px;
+  background: color-mix(in srgb, var(--dr-bg) 80%, #000);
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  color: var(--dr-text);
+  font-family: inherit;
+  font-size: 12px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-ability-actions {
+  display: flex;
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.crimson-fantasy-armory .armory-ability-actions button,
+.crimson-fantasy-armory .armory-item-actions button,
+.crimson-fantasy-armory .armory-skill-cycle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 21px;
+  padding: 0;
+  background: var(--dr-panel-2);
+  border: 1px solid var(--dr-line);
+  border-radius: 4px;
+  color: var(--dr-accent-2);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-ability-actions button:hover,
+.crimson-fantasy-armory .armory-item-actions button:hover,
+.crimson-fantasy-armory .armory-skill-cycle:hover {
+  border-color: var(--dr-accent-2);
+  color: #fff6ee;
+  background: color-mix(in srgb, var(--dr-accent) 40%, var(--dr-panel-2));
+}
+
+.crimson-fantasy-armory .armory-item-actions .is-danger:hover { color: #ff8a7a; border-color: #ff8a7a; }
+
+/* saves + skills */
+
+.crimson-fantasy-armory .armory-saves,
+.crimson-fantasy-armory .armory-skills {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crimson-fantasy-armory .armory-saves { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.crimson-fantasy-armory .armory-save,
+.crimson-fantasy-armory .armory-skill-roll {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 4px 6px;
+  background: transparent;
+  border: 0;
+  border-radius: 3px;
+  color: var(--dr-text);
+  font-family: inherit;
+  font-size: 12px;
+  justify-content: flex-start;
+  text-align: left;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-save:hover,
+.crimson-fantasy-armory .armory-skill-roll:hover {
+  background: color-mix(in srgb, var(--dr-accent) 24%, transparent);
+  color: #fff6ee;
+}
+
+.crimson-fantasy-armory .armory-save-label,
+.crimson-fantasy-armory .armory-skill-roll {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.crimson-fantasy-armory .armory-save-value,
+.crimson-fantasy-armory .armory-skill-total {
+  color: var(--dr-accent-2);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-skill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px dotted color-mix(in srgb, var(--dr-line) 70%, transparent);
+}
+
+.crimson-fantasy-armory .armory-skill.is-proficient .armory-skill-roll { color: #fff6ee; font-weight: 700; }
+.crimson-fantasy-armory .armory-skill.is-expert .armory-skill-roll { color: var(--dr-accent-2); }
+
+.crimson-fantasy-armory .armory-skill-ability {
+  width: 26px;
+  color: var(--dr-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.crimson-fantasy-armory .armory-prof-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--dr-accent-2);
+  border-radius: 50%;
+}
+
+.crimson-fantasy-armory .armory-prof-dot.is-on {
+  background: var(--dr-accent);
+  box-shadow: 0 0 7px color-mix(in srgb, var(--dr-accent) 80%, transparent);
+}
+
+.crimson-fantasy-armory .armory-skill.is-expert .armory-prof-dot { background: var(--dr-accent-2); }
+
+/* items */
+
+.crimson-fantasy-armory .armory-loadout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(286px, 1fr));
+  gap: 12px;
+}
+
+.crimson-fantasy-armory .armory-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crimson-fantasy-armory .armory-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  background: color-mix(in srgb, var(--dr-panel) 85%, transparent);
+  border: 1px solid var(--dr-line);
+  border-left: 3px solid color-mix(in srgb, var(--dr-accent) 55%, transparent);
+  border-radius: 3px 6px 3px 6px;
+}
+
+.crimson-fantasy-armory .armory-item.is-equipped {
+  border-left-color: var(--dr-accent-2);
+  background: color-mix(in srgb, var(--dr-accent) 16%, var(--dr-panel));
+}
+
+.crimson-fantasy-armory .armory-item-img {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--dr-bg) 70%, #000);
+  filter: saturate(1.15) contrast(1.02);
+}
+
+.crimson-fantasy-armory .armory-item-name {
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--dr-text);
+  font-family: inherit;
+  justify-content: flex-start;
+  font-size: 12.5px;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crimson-fantasy-armory .armory-item-name:hover { color: #fff6ee; text-decoration: underline dotted var(--dr-accent-2); }
+
+.crimson-fantasy-armory .armory-item-name small {
+  color: var(--dr-accent-2);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-item-qty {
+  color: var(--dr-dim);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-item-actions { display: inline-flex; gap: 3px; }
+
+.crimson-fantasy-armory .armory-empty {
+  padding: 9px 6px;
+  color: var(--dr-dim);
+  font-size: 11.5px;
+  font-style: italic;
+  border: 1px dashed var(--dr-line);
+  border-radius: 3px;
+}
+
+/* hoard header: coins and load */
+
+.crimson-fantasy-armory .armory-coins {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, var(--dr-panel-2), var(--dr-panel));
+  border: 1px solid var(--dr-line);
+  border-radius: 4px 12px 4px 12px;
+}
+
+.crimson-fantasy-armory .armory-purse-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding-right: 9px;
+  border-right: 1px solid var(--dr-line);
+  color: var(--dr-accent-2);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  white-space: nowrap;
+}
+
+.crimson-fantasy-armory .armory-purse-label i { font-size: 10px; }
+
+.crimson-fantasy-armory .armory-bank {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: -2px 0 12px;
+  padding: 7px 12px;
+  border: 1px solid color-mix(in srgb, var(--dr-accent-2) 35%, var(--dr-line));
+  border-left: 3px solid var(--dr-accent-2);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dr-accent-2) 8%, var(--dr-panel-2)), var(--dr-panel));
+}
+
+.crimson-fantasy-armory .armory-bank-icon {
+  display: grid;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--dr-accent-2) 50%, transparent);
+  border-radius: 50%;
+  color: var(--dr-accent-2);
+  font-size: 11px;
+}
+
+.crimson-fantasy-armory .armory-bank-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.crimson-fantasy-armory .armory-bank-copy strong {
+  color: var(--dr-text);
+  font-size: 9px;
+  letter-spacing: .12em;
+}
+
+.crimson-fantasy-armory .armory-bank-copy small {
+  color: var(--dr-dim);
+  font-size: 9px;
+}
+
+.crimson-fantasy-armory .armory-bank-total {
+  margin-left: auto;
+  color: var(--dr-accent-2);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-coin {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--dr-accent-2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.crimson-fantasy-armory .armory-coin input {
+  width: 66px;
+  padding: 3px 5px;
+  background: color-mix(in srgb, var(--dr-bg) 76%, #000);
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  color: #fff6ee;
+  font-family: inherit;
+  font-size: 12px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-load {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.crimson-fantasy-armory .armory-load-bar {
+  position: relative;
+  flex: 1;
+  height: 9px;
+  background: color-mix(in srgb, var(--dr-bg) 80%, #000);
+  border: 1px solid var(--dr-line);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.crimson-fantasy-armory .armory-load-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--dr-accent-2), var(--dr-accent));
+}
+
+.crimson-fantasy-armory .armory-load-text {
+  color: var(--dr-dim);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* log */
+
+.crimson-fantasy-armory .armory-log-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.crimson-fantasy-armory .armory-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dr-dim);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.crimson-fantasy-armory .armory-field--wide { grid-column: 1 / -1; }
+
+.crimson-fantasy-armory .armory-field input,
+.crimson-fantasy-armory .armory-field textarea {
+  padding: 6px 8px;
+  background: color-mix(in srgb, var(--dr-bg) 82%, #000);
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  color: var(--dr-text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.crimson-fantasy-armory .armory-field input[type="checkbox"] { width: 20px; height: 20px; }
+
+.crimson-fantasy-armory .armory-field textarea { min-height: 190px; resize: vertical; line-height: 1.45; }
+
+.crimson-fantasy-armory .armory-field input:focus,
+.crimson-fantasy-armory .armory-field textarea:focus,
+.crimson-fantasy-armory .armory-ability-input:focus,
+.crimson-fantasy-armory .armory-hp-read input:focus,
+.crimson-fantasy-armory .armory-coin input:focus {
+  outline: none;
+  border-color: var(--dr-accent-2);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--dr-accent-2) 45%, transparent);
+}
+
+/* footer */
+
+.crimson-fantasy-armory .armory-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 16px;
+  background: color-mix(in srgb, var(--dr-bg) 70%, #000);
+  border-top: 1px solid var(--dr-line);
+  color: var(--dr-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.crimson-fantasy-armory .armory-foot-status { color: var(--dr-accent-2); }
+.crimson-fantasy-armory .armory-foot-status i { margin-right: 5px; }
+
+/* GM utility */
+
+.crimson-fantasy-armory .armory-panel--utility { margin-top: 12px; }
+
+.crimson-fantasy-armory .armory-utility-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.crimson-fantasy-armory .armory-utility {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--dr-panel);
+  border: 1px solid var(--dr-line);
+  border-left: 3px solid var(--dr-accent-2);
+  border-radius: 3px 8px 3px 8px;
+  color: var(--dr-text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-utility:hover {
+  border-color: var(--dr-accent-2);
+  background: var(--dr-panel-2);
+}
+
+.crimson-fantasy-armory .armory-utility i {
+  flex: 0 0 20px;
+  color: var(--dr-accent-2);
+  font-size: 16px;
+  text-align: center;
+}
+
+.crimson-fantasy-armory .armory-utility span {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+}
+
+.crimson-fantasy-armory .armory-utility strong { font-size: 12.5px; letter-spacing: 0.04em; }
+
+.crimson-fantasy-armory .armory-utility small { color: var(--dr-dim); font-size: 10.5px; }
+
+/* vehicles */
+
+.crimson-fantasy-armory .armory-panel--vehicle { margin-bottom: 12px; }
+
+.crimson-fantasy-armory .armory-vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.crimson-fantasy-armory .armory-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--dr-panel) 80%, transparent);
+  border: 1px solid var(--dr-line);
+  border-left: 2px solid var(--dr-accent);
+  border-radius: 3px;
+}
+
+.crimson-fantasy-armory .armory-stat-label {
+  color: var(--dr-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.crimson-fantasy-armory .armory-stat-value {
+  color: #fff6ee;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-stat-value small {
+  margin-left: 3px;
+  color: var(--dr-dim);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.crimson-fantasy-armory .armory-core-grid > .armory-panel:only-child { grid-column: 1 / -1; }
+
+/* ------------------------------------------------------- dragon palettes */
+
+.crimson-fantasy-armory .armory-shell[data-scheme="black"] {
+  --dr-bg: #0b0f0b; --dr-panel: #151a14; --dr-panel-2: #1d241a; --dr-line: #3c5133;
+  --dr-accent: #5f9c38; --dr-accent-2: #d8f7a8; --dr-text: #eef6e6; --dr-dim: #a8bb98; --dr-head: #131a10;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="blue"] {
+  --dr-bg: #060f1c; --dr-panel: #0d1a2b; --dr-panel-2: #142438; --dr-line: #2b4a6b;
+  --dr-accent: #3f8fd6; --dr-accent-2: #b9ecff; --dr-text: #e6f3ff; --dr-dim: #9db6cf; --dr-head: #0a1626;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="green"] {
+  --dr-bg: #07130c; --dr-panel: #0e1e14; --dr-panel-2: #15281b; --dr-line: #2f5334;
+  --dr-accent: #3f9e4c; --dr-accent-2: #cdf7b0; --dr-text: #eaf7e6; --dr-dim: #a4bfa0; --dr-head: #0b1c10;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="red"] {
+  --dr-bg: #140807; --dr-panel: #1f0e0b; --dr-panel-2: #2b1310; --dr-line: #5c2820;
+  --dr-accent: #c8503c; --dr-accent-2: #ffc27a; --dr-text: #ffede2; --dr-dim: #c79f92; --dr-head: #22100c;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="white"] {
+  --dr-bg: #0d1218; --dr-panel: #161e26; --dr-panel-2: #1e2831; --dr-line: #3b4d5c;
+  --dr-accent: #8fb4cd; --dr-accent-2: #ffffff; --dr-text: #f4faff; --dr-dim: #b1c2ce; --dr-head: #131b22;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="amethyst"] {
+  --dr-bg: #100821; --dr-panel: #1a102c; --dr-panel-2: #231639; --dr-line: #453064;
+  --dr-accent: #8f4fe0; --dr-accent-2: #e2c7ff; --dr-text: #f3eaff; --dr-dim: #b8a3d1; --dr-head: #190d2b;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="crystal"] {
+  --dr-bg: #07161d; --dr-panel: #0e2029; --dr-panel-2: #152a35; --dr-line: #2c4d5c;
+  --dr-accent: #4bb4cf; --dr-accent-2: #e8fbff; --dr-text: #eafaff; --dr-dim: #a6c0ca; --dr-head: #0c1e26;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="emerald"] {
+  --dr-bg: #06140f; --dr-panel: #0c1f18; --dr-panel-2: #122a20; --dr-line: #245243;
+  --dr-accent: #22996f; --dr-accent-2: #b8ffe2; --dr-text: #e4fbf2; --dr-dim: #9dbcb1; --dr-head: #0a1c15;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="sapphire"] {
+  --dr-bg: #060a1c; --dr-panel: #0c1228; --dr-panel-2: #121a36; --dr-line: #273360;
+  --dr-accent: #4266d6; --dr-accent-2: #b9caff; --dr-text: #e8eeff; --dr-dim: #9faacd; --dr-head: #0a1024;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="topaz"] {
+  --dr-bg: #171106; --dr-panel: #22190a; --dr-panel-2: #2e230e; --dr-line: #5b471c;
+  --dr-accent: #d8a021; --dr-accent-2: #ffe6a3; --dr-text: #fff7e2; --dr-dim: #cbb68d; --dr-head: #1f1708;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="brass"] {
+  --dr-bg: #191308; --dr-panel: #241c0d; --dr-panel-2: #302513; --dr-line: #5c4a24;
+  --dr-accent: #b8933a; --dr-accent-2: #f2d68f; --dr-text: #fbf2dd; --dr-dim: #c3b393; --dr-head: #211a0c;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="bronze"] {
+  --dr-bg: #1a1208; --dr-panel: #251a0e; --dr-panel-2: #322315; --dr-line: #5e4227;
+  --dr-accent: #a86a33; --dr-accent-2: #e6b380; --dr-text: #fbeede; --dr-dim: #c4ab92; --dr-head: #231809;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="copper"] {
+  --dr-bg: #1b0f0a; --dr-panel: #26170f; --dr-panel-2: #332016; --dr-line: #63402c;
+  --dr-accent: #c06a41; --dr-accent-2: #ffc09c; --dr-text: #fdeee3; --dr-dim: #c9ab98; --dr-head: #251609;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="gold"] {
+  --dr-bg: #1c1505; --dr-panel: #271e08; --dr-panel-2: #34290d; --dr-line: #64501b;
+  --dr-accent: #d8ae2c; --dr-accent-2: #ffe9a8; --dr-text: #fff8e4; --dr-dim: #cbbb8d; --dr-head: #241c07;
+}
+
+.crimson-fantasy-armory .armory-shell[data-scheme="silver"] {
+  --dr-bg: #10141a; --dr-panel: #191f27; --dr-panel-2: #222a34; --dr-line: #44515f;
+  --dr-accent: #9aa9b8; --dr-accent-2: #f2f7ff; --dr-text: #f6faff; --dr-dim: #b3bfca; --dr-head: #151b22;
+}
+
+/* custom colours arrive as inline custom properties on the shell */
+
+.crimson-fantasy-armory .armory-shell[data-scheme="custom"] {
+  --dr-panel: color-mix(in srgb, var(--dr-bg) 82%, var(--dr-accent));
+  --dr-panel-2: color-mix(in srgb, var(--dr-bg) 70%, var(--dr-accent));
+  --dr-line: color-mix(in srgb, var(--dr-accent) 46%, var(--dr-bg));
+  --dr-head: color-mix(in srgb, var(--dr-bg) 86%, var(--dr-accent));
+  --dr-text: #fff6f0;
+  --dr-dim: color-mix(in srgb, var(--dr-accent) 30%, #cfc4c0);
+}
+
+/* ------------------------------------------------------- colour picker */
+
+.crimson-fantasy-armory .armory-scheme-toggle.is-active {
+  border-color: var(--dr-accent-2);
+  color: var(--dr-accent-2);
+  background: color-mix(in srgb, var(--dr-accent) 30%, var(--dr-panel));
+}
+
+.crimson-fantasy-armory .armory-schemes {
+  display: none;
+  position: absolute;
+  top: calc(100% - 1px);
+  right: 16px;
+  z-index: 7;
+  width: 268px;
+  max-height: 520px;
+  overflow: auto;
+  padding: 12px;
+  background: linear-gradient(180deg, var(--dr-panel-2), var(--dr-panel));
+  border: 1px solid var(--dr-accent-2);
+  border-radius: 4px 14px 6px 14px;
+  box-shadow: 0 18px 34px #000000c4, inset 0 3px 0 var(--dr-accent);
+}
+
+.crimson-fantasy-armory .armory-schemes.is-open { display: block; }
+
+.crimson-fantasy-armory .armory-schemes-title {
+  margin: 0 0 8px;
+  color: var(--dr-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.crimson-fantasy-armory .armory-scheme-group {
+  margin: 10px 0 5px;
+  color: var(--dr-accent-2);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.crimson-fantasy-armory .armory-scheme-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.crimson-fantasy-armory .armory-swatch {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 5px 6px;
+  background: color-mix(in srgb, var(--dr-bg) 62%, transparent);
+  border: 1px solid var(--dr-line);
+  border-radius: 4px;
+  color: var(--dr-text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-swatch:hover {
+  border-color: var(--dr-accent-2);
+  background: color-mix(in srgb, var(--dr-accent) 24%, transparent);
+}
+
+.crimson-fantasy-armory .armory-swatch.is-active {
+  border-color: var(--dr-accent-2);
+  box-shadow: inset 3px 0 0 var(--dr-accent-2);
+}
+
+.crimson-fantasy-armory .armory-swatch-chip {
+  flex: none;
+  width: 30px;
+  height: 17px;
+  border: 1px solid #ffffff33;
+  border-radius: 3px;
+}
+
+.crimson-fantasy-armory .armory-swatch-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.crimson-fantasy-armory .armory-custom {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.crimson-fantasy-armory .armory-color {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--dr-dim);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.crimson-fantasy-armory .armory-color input[type="color"] {
+  width: 100%;
+  height: 26px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-custom-apply {
+  width: 100%;
+  margin-top: 7px;
+  padding: 6px 8px;
+  background: color-mix(in srgb, var(--dr-accent) 40%, var(--dr-panel));
+  border: 1px solid var(--dr-accent-2);
+  border-radius: 4px;
+  color: #fff6ee;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-custom-apply:hover { background: color-mix(in srgb, var(--dr-accent) 62%, var(--dr-panel)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .crimson-fantasy-armory .armory-swatch,
+  .crimson-fantasy-armory .armory-nav-tab { transition: none; }
+}
+
+/* ==================================================== dragon geometry
+   Overlapping hide scales and plates cut like scale edges: every box is
+   forged, not drawn, so no two corners of the armory agree with each other. */
+
+.crimson-fantasy-armory {
+  --dr-scale: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='44'%20height='30'%20viewBox='0%200%2044%2030'%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='1.5'%20stroke-linecap='round'%3E%3Cpath%20d='M-11,0a11,11,0,0,1,22,0M11,0a11,11,0,0,1,22,0M33,0a11,11,0,0,1,22,0M0,15a11,11,0,0,1,22,0M22,15a11,11,0,0,1,22,0M-11,30a11,11,0,0,1,22,0M11,30a11,11,0,0,1,22,0M33,30a11,11,0,0,1,22,0'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* --- hide fields ------------------------------------------------------- */
+
+.crimson-fantasy-armory .armory-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--dr-accent) 55%, transparent);
+  -webkit-mask-image: var(--dr-scale);
+  mask-image: var(--dr-scale);
+  -webkit-mask-size: 44px 30px;
+  mask-size: 44px 30px;
+  opacity: 0.2;
+}
+
+.crimson-fantasy-armory .armory-head > * { position: relative; }
+
+.crimson-fantasy-armory .armory-head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--dr-accent-2) 42%, var(--dr-accent) 58%);
+  -webkit-mask-image: var(--dr-scale);
+  mask-image: var(--dr-scale);
+  -webkit-mask-size: 27px 18px;
+  mask-size: 27px 18px;
+  opacity: 0.13;
+}
+
+.crimson-fantasy-armory .armory-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--dr-accent) 70%, transparent);
+  -webkit-mask-image: var(--dr-scale);
+  mask-image: var(--dr-scale);
+  -webkit-mask-size: 34px 23px;
+  mask-size: 34px 23px;
+  opacity: 0.1;
+}
+
+.crimson-fantasy-armory .armory-panel > * { position: relative; }
+
+.crimson-fantasy-armory .armory-panel::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 26px;
+  width: 62px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--dr-accent-2), transparent);
+  pointer-events: none;
+}
+
+/* --- header plate ------------------------------------------------------ */
+
+.crimson-fantasy-armory .armory-head {
+  border-bottom: 0;
+  padding-bottom: 17px;
+}
+
+.crimson-fantasy-armory .armory-head::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background: linear-gradient(180deg, var(--dr-accent-2), var(--dr-accent) 58%, color-mix(in srgb, var(--dr-accent) 40%, transparent));
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 24px, transparent 24px 30px);
+  mask-image: repeating-linear-gradient(90deg, #000 0 24px, transparent 24px 30px);
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+/* kite-shield portrait */
+
+.crimson-fantasy-armory .armory-portrait {
+  width: 118px;
+  height: 132px;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 74%, 50% 100%, 0 74%);
+  filter:
+    drop-shadow(0 0 1px var(--dr-accent-2))
+    drop-shadow(0 0 1px var(--dr-accent-2))
+    drop-shadow(0 0 1px var(--dr-line))
+    drop-shadow(3px 4px 0 #00000073);
+}
+
+.crimson-fantasy-armory .armory-portrait figcaption {
+  left: 8%;
+  right: 8%;
+  bottom: 30px;
+  padding: 1px 2px;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  border-top: 1px solid color-mix(in srgb, var(--dr-accent-2) 55%, transparent);
+  background: color-mix(in srgb, var(--dr-bg) 80%, transparent);
+}
+
+/* hex plate gauges, round AC with a claw ring */
+
+.crimson-fantasy-armory .armory-gauge:not(.armory-gauge--ac) {
+  border: 0;
+  border-radius: 0;
+  padding: 9px 18px;
+  clip-path: polygon(11px 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 11px 100%, 0 50%);
+  filter:
+    drop-shadow(0 0 1px var(--dr-line))
+    drop-shadow(0 0 1px var(--dr-line))
+    drop-shadow(2px 3px 0 #00000066);
+}
+
+.crimson-fantasy-armory .armory-gauge--ac {
+  position: relative;
+  border: 0;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2px var(--dr-accent-2),
+    0 0 0 5px color-mix(in srgb, var(--dr-accent) 30%, transparent),
+    inset 0 0 26px color-mix(in srgb, var(--dr-accent) 55%, transparent);
+}
+
+.crimson-fantasy-armory .armory-gauge--ac::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 2px dotted color-mix(in srgb, var(--dr-accent-2) 40%, transparent);
+  pointer-events: none;
+}
+
+/* pennant tabs */
+
+.crimson-fantasy-armory .armory-nav-tab {
+  border-radius: 0;
+  padding: 9px 24px 8px;
+  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 100%, 0 100%);
+}
+
+.crimson-fantasy-armory .armory-nav-tab.is-active {
+  box-shadow: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dr-accent) 46%, var(--dr-panel-2)), var(--dr-panel));
+}
+
+.crimson-fantasy-armory .armory-rest {
+  border-radius: 0;
+  clip-path: polygon(50% 0, 100% 26%, 100% 74%, 50% 100%, 0 74%, 0 26%);
+  border: 0;
+  background: var(--dr-panel-2);
+  box-shadow: inset 0 0 0 1px var(--dr-line);
+}
+
+/* --- plates ------------------------------------------------------------ */
+
+.crimson-fantasy-armory .armory-panel {
+  border: 0;
+  border-radius: 0;
+  padding: 13px 16px 15px;
+  clip-path: polygon(
+    0 17px,
+    17px 0,
+    calc(100% - 32px) 0,
+    100% 32px,
+    100% calc(100% - 11px),
+    calc(100% - 11px) 100%,
+    27px 100%,
+    0 calc(100% - 27px)
+  );
+  filter:
+    drop-shadow(0 0 1px var(--dr-line))
+    drop-shadow(0 0 1px var(--dr-line))
+    drop-shadow(5px 6px 0 #00000066);
+}
+
+/* scale-shaped ability chips: rounded like hide, never clipping their buttons */
+
+.crimson-fantasy-armory .armory-ability {
+  border: 0;
+  border-radius: 44% 44% 9px 9px / 30% 30% 9px 9px;
+  padding: 11px 4px 9px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dr-accent) 26%, var(--dr-panel-2)), color-mix(in srgb, var(--dr-bg) 74%, #000));
+  box-shadow:
+    inset 0 0 0 1px var(--dr-line),
+    inset 0 8px 16px color-mix(in srgb, var(--dr-accent) 22%, transparent),
+    0 3px 0 #00000059;
+}
+
+.crimson-fantasy-armory .armory-ability-label { font-size: 9px; letter-spacing: 0.12em; }
+
+/* claw-cut item rows */
+
+.crimson-fantasy-armory .armory-item {
+  border-radius: 0;
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 0;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  padding-right: 12px;
+}
+
+.crimson-fantasy-armory .armory-item-img {
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
+}
+
+.crimson-fantasy-armory .armory-item-actions button,
+.crimson-fantasy-armory .armory-ability-actions button,
+.crimson-fantasy-armory .armory-skill-cycle {
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%);
+}
+
+/* forked coin banner */
+
+.crimson-fantasy-armory .armory-coins {
+  border-radius: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 17px) 50%, 100% 100%, 0 100%, 17px 50%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dr-accent) 14%, var(--dr-panel-2)), var(--dr-panel));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--dr-accent-2) 30%, transparent);
+}
+
+.crimson-fantasy-armory .armory-load-bar { border-radius: 0; clip-path: polygon(0 0, 100% 0, 100% 100%, 5px 100%, 0 calc(100% - 5px)); }
+
+/* vehicle stat plates */
+
+.crimson-fantasy-armory .armory-stat {
+  border: 0;
+  border-radius: 0;
+  padding-left: 13px;
+  clip-path: polygon(9px 0, 100% 0, 100% 100%, 0 100%, 0 9px);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dr-accent) 12%, var(--dr-panel)), color-mix(in srgb, var(--dr-bg) 78%, #000));
+  box-shadow: inset 2px 0 0 var(--dr-accent);
+}
+
+/* GM utility plates */
+
+.crimson-fantasy-armory .armory-utility {
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+
+/* the palette plate itself */
+
+.crimson-fantasy-armory .armory-schemes {
+  border-radius: 0;
+  border: 0;
+  clip-path: polygon(0 20px, 20px 0, calc(100% - 32px) 0, 100% 32px, 100% 100%, 0 100%);
+  filter:
+    drop-shadow(0 0 1px var(--dr-accent-2))
+    drop-shadow(0 0 1px var(--dr-accent-2))
+    drop-shadow(0 18px 26px #000000b8);
+  box-shadow: none;
+}
+
+.crimson-fantasy-armory .armory-scheme-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.crimson-fantasy-armory .armory-swatch {
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
+}
+
+.crimson-fantasy-armory .armory-swatch-chip {
+  border-radius: 60% 60% 44% 44% / 72% 72% 44% 44%;
+  box-shadow: inset 0 -4px 7px #00000040;
+}
+
+.crimson-fantasy-armory .armory-custom-apply {
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%);
+}
+
+.crimson-fantasy-armory .armory-color input[type="color"] { border-radius: 2px; }
+
+.crimson-fantasy-armory .armory-empty {
+  border: 0;
+  border-left: 2px dashed var(--dr-line);
+  border-radius: 0;
+  padding-left: 10px;
+}
+
+.crimson-fantasy-armory .armory-foot { border-top: 0; box-shadow: inset 0 1px 0 var(--dr-line); }
+
+/* roomier initiative plate + named coin row */
+
+.crimson-fantasy-armory .armory-gauge.armory-gauge--init {
+  min-width: 104px;
+  padding-left: 26px;
+  padding-right: 26px;
+}
+
+.crimson-fantasy-armory .armory-gauge.armory-gauge--init .armory-gauge-value {
+  font-size: 28px;
+}
+
+.crimson-fantasy-armory .armory-coins { flex-wrap: wrap; }
+
+.crimson-fantasy-armory .armory-coin {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.crimson-fantasy-armory .armory-coin-name {
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--dr-dim);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* initiative plate: label always visible, value is the roll button */
+
+.crimson-fantasy-armory .armory-gauge.armory-gauge--init {
+  border-color: color-mix(in srgb, var(--dr-accent-2) 55%, var(--dr-line));
+}
+
+.crimson-fantasy-armory .armory-gauge--init .armory-gauge-label {
+  color: var(--dr-accent-2);
+  font-size: 10px;
+}
+
+.crimson-fantasy-armory .armory-init-roll {
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  background: none;
+  border: 0;
+  color: #fff6ee;
+  font: inherit;
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-init-roll:hover { color: var(--dr-accent-2); }
+
+/* crimson handouts */
+
+.crimson-fantasy-armory .armory-shares {
+  display: none;
+  position: absolute;
+  top: calc(100% - 1px);
+  right: 16px;
+  z-index: 7;
+  width: 320px;
+  max-height: 460px;
+  overflow: auto;
+  padding: 12px;
+  background: linear-gradient(180deg, var(--dr-panel-2), var(--dr-panel));
+  border: 1px solid var(--dr-accent-2);
+  border-radius: 4px 14px 6px 14px;
+  box-shadow: 0 18px 34px #000000c4, inset 0 3px 0 var(--dr-accent);
+}
+
+.crimson-fantasy-armory .armory-shares.is-open { display: block; }
+
+.crimson-fantasy-armory .armory-share-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 7px 9px;
+  background: color-mix(in srgb, var(--dr-panel) 70%, transparent);
+  border: 1px solid var(--dr-line);
+  color: var(--dr-text);
+  font-family: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-share-link:hover,
+.crimson-fantasy-armory .armory-share-toggle.is-active {
+  border-color: var(--dr-accent-2);
+  color: #fff6ee;
+  background: var(--dr-panel-2);
+}
+
+.crimson-fantasy-armory .armory-share-name { font-weight: 700; }
+
+.crimson-fantasy-armory .armory-tool-link .armory-share-name i {
+  margin-right: 6px;
+  color: var(--dr-accent-2);
+}
+
+.crimson-fantasy-armory .armory-share-folder {
+  color: var(--dr-dim);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.crimson-fantasy-armory .armory-share-empty {
+  margin: 0 0 8px;
+  color: var(--dr-dim);
+  font-size: 11px;
+  font-style: italic;
+}
+
+.crimson-fantasy-armory .armory-share-manage {
+  width: 100%;
+  margin-top: 8px;
+  padding: 7px;
+  background: color-mix(in srgb, var(--dr-accent) 26%, var(--dr-panel));
+  border: 1px solid var(--dr-accent-2);
+  color: #fff6ee;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
+
+/* handout picker dialog */
+
+.crimson-handout-picker .crimson-handout-hint { margin: 0 0 8px; font-size: 12px; }
+
+.crimson-handout-picker .crimson-handout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 55vh;
+  overflow: auto;
+}
+
+.crimson-handout-picker .crimson-handout-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+}
+
+.crimson-handout-picker .crimson-handout-name { flex: 1; font-size: 12px; }
+
+.crimson-handout-picker .crimson-handout-folder { color: #7a6a63; font-size: 10px; }
+
+/* ------------------------------------------------------- container inventories */
+
+.crimson-fantasy-armory .armory-containers {
+  margin-bottom: 12px;
+}
+
+.crimson-fantasy-armory .armory-container-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+.crimson-fantasy-armory .armory-container {
+  overflow: hidden;
+  border: 1px solid var(--dr-line);
+  border-radius: 3px 8px 3px 3px;
+  background: linear-gradient(150deg, var(--dr-panel-2), var(--dr-panel));
+  box-shadow: 0 4px 12px #0004, inset 0 1px #ffffff0a;
+}
+
+.crimson-fantasy-armory .armory-container-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border-bottom: 1px solid var(--dr-line);
+  background: color-mix(in srgb, var(--dr-accent) 10%, var(--dr-panel));
+}
+
+.crimson-fantasy-armory .armory-container-name {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--dr-text);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.crimson-fantasy-armory .armory-container-name:hover {
+  color: #fff6ee;
+  text-decoration: underline dotted var(--dr-accent-2);
+}
+
+.crimson-fantasy-armory .armory-container-name small {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--dr-dim);
+  font-size: 9.5px;
+  font-weight: 400;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+}
+
+.crimson-fantasy-armory .armory-container-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+}
+
+.crimson-fantasy-armory .armory-item--nested {
+  margin-left: calc((var(--nest-depth, 1) - 1) * 14px);
+  border-left-color: color-mix(in srgb, var(--dr-accent) 40%, transparent);
+}
+
+.crimson-fantasy-armory .armory-item--nested.is-container {
+  border-left-color: var(--dr-accent-2);
+}
+
+.crimson-fantasy-armory .armory-container-tag {
+  flex: none;
+  padding: 0 3px;
+  border: 1px solid color-mix(in srgb, var(--dr-accent-2) 45%, transparent);
+  color: var(--dr-accent-2);
+  font-size: 7.5px;
+  letter-spacing: .06em;
+}
+
+.crimson-fantasy-armory .armory-container-tag--money {
+  border-color: color-mix(in srgb, var(--dr-accent-2) 30%, transparent);
+  color: var(--dr-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.crimson-fantasy-armory .armory-container-empty {
+  margin: 0;
+  padding: 10px 9px;
+  color: var(--dr-dim);
+  font-size: 10.5px;
+  font-style: italic;
+}
+
+/* ----------------------------------------------------------- spell ranks */
+
+.crimson-fantasy-armory .armory-panel--spells {
+  grid-column: 1 / -1;
+}
+
+.crimson-fantasy-armory .armory-spell-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.crimson-fantasy-armory .armory-spell-head .armory-list-title {
+  margin-bottom: 0;
+}
+
+.crimson-fantasy-armory .armory-spell-head small {
+  color: var(--dr-dim);
+  font-size: 9.5px;
+  font-weight: 400;
+  letter-spacing: .06em;
+}
+
+.crimson-fantasy-armory .armory-spell-ranks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.crimson-fantasy-armory .armory-spell-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--dr-bg) 72%, var(--dr-panel));
+}
+
+.crimson-fantasy-armory .armory-spell-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 25px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--dr-dim);
+  font-family: inherit;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-spell-tab:hover {
+  border-color: var(--dr-line);
+  color: var(--dr-text);
+  background: color-mix(in srgb, var(--dr-accent) 8%, transparent);
+}
+
+.crimson-fantasy-armory .armory-spell-tab.is-active {
+  border-color: var(--dr-accent-2);
+  background: color-mix(in srgb, var(--dr-accent) 24%, var(--dr-panel-2));
+  color: var(--dr-accent-2);
+  box-shadow: inset 0 -2px 0 var(--dr-accent);
+}
+
+.crimson-fantasy-armory .armory-spell-tab--all {
+  margin-left: 6px;
+  border-color: color-mix(in srgb, var(--dr-accent-2) 28%, transparent);
+}
+
+.crimson-fantasy-armory .armory-spell-tab--all.is-active {
+  border-color: var(--dr-accent-2);
+}
+
+.crimson-fantasy-armory .armory-spell-tab-count {
+  display: grid;
+  min-width: 15px;
+  height: 15px;
+  place-items: center;
+  padding: 0 3px;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  font-size: 8.5px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.crimson-fantasy-armory .armory-spell-rank {
+  overflow: hidden;
+  border: 1px solid var(--dr-line);
+  border-radius: 2px 6px 2px 2px;
+  background: color-mix(in srgb, var(--dr-panel) 82%, transparent);
+}
+
+.crimson-fantasy-armory .armory-spell-rank[hidden],
+.crimson-fantasy-armory .armory-spell-rank.is-rank-hidden { display: none !important; }
+
+.crimson-fantasy-armory .armory-spell-rank-head {
+  padding: 0;
+  border-bottom: 1px solid var(--dr-line);
+  background: color-mix(in srgb, var(--dr-accent) 9%, var(--dr-panel-2));
+}
+
+.crimson-fantasy-armory .armory-spell-rank-toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.crimson-fantasy-armory .armory-spell-rank-toggle:hover {
+  background: color-mix(in srgb, var(--dr-accent) 9%, transparent);
+}
+
+.crimson-fantasy-armory .armory-spell-rank-toggle:focus-visible,
+.crimson-fantasy-armory .armory-spell-tab:focus-visible {
+  outline: 1px solid var(--dr-accent-2);
+  outline-offset: -2px;
+}
+
+.crimson-fantasy-armory .armory-spell-rank-chevron {
+  flex: none;
+  color: var(--dr-dim);
+  font-size: 8px;
+  transition: transform .16s ease;
+}
+
+.crimson-fantasy-armory .armory-spell-rank-chip {
+  display: grid;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--dr-accent-2) 55%, transparent);
+  color: var(--dr-accent-2);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.crimson-fantasy-armory .armory-spell-rank-title {
+  flex: 1;
+  min-width: 0;
+  color: var(--dr-text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.crimson-fantasy-armory .armory-spell-rank-count {
+  margin-left: auto;
+  color: var(--dr-dim);
+  font-size: 9.5px;
+  letter-spacing: .03em;
+}
+
+.crimson-fantasy-armory .armory-spell-list {
+  gap: 2px;
+  padding: 5px;
+}
+
+.crimson-fantasy-armory .armory-spell {
+  align-items: center;
+  gap: 7px;
+}
+
+.crimson-fantasy-armory .armory-spell.is-prepared {
+  background: color-mix(in srgb, var(--dr-accent) 11%, var(--dr-panel));
+}
+
+.crimson-fantasy-armory .armory-spell-state {
+  flex: none;
+  width: 12px;
+  color: var(--dr-dim);
+  font-size: 10px;
+  text-align: center;
+}
+
+.crimson-fantasy-armory .armory-spell-state.is-on {
+  color: var(--dr-accent-2);
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--dr-accent-2) 55%, transparent));
+}
+
+.crimson-fantasy-armory .armory-spell-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.crimson-fantasy-armory .armory-spell-name {
+  display: block;
+  flex: none;
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.crimson-fantasy-armory .armory-spell-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px 8px;
+  margin: 0;
+  color: var(--dr-dim);
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.crimson-fantasy-armory .armory-spell-meta span {
+  position: relative;
+}
+
+.crimson-fantasy-armory .armory-spell-meta span + span::before {
+  content: "·";
+  margin-right: 7px;
+  color: color-mix(in srgb, var(--dr-accent) 55%, transparent);
+}
+
+.crimson-fantasy-armory .armory-spell-tag {
+  color: var(--dr-accent-2);
+  font-size: 8px;
+  letter-spacing: .04em;
+}
+
+.crimson-fantasy-armory .armory-spell-school {
+  flex: none;
+  width: 36px;
+  padding: 2px 0;
+  border: 1px solid var(--dr-line);
+  color: var(--dr-accent-2);
+  font-size: 8px;
+  letter-spacing: .05em;
+  text-align: center;
+}
+
+.crimson-fantasy-armory .armory-spell .armory-item-actions {
+  align-self: center;
+}
+
+@media (max-width: 620px) {
+  .crimson-fantasy-armory .armory-container-grid { grid-template-columns: minmax(0, 1fr); }
+  .crimson-fantasy-armory .armory-spell-school { display: none; }
+}
+
+
+/* ------------------------------------------------- collapsible sections */
+.crimson-fantasy-armory .armory-collapse {
+  display: grid;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--dr-panel) 78%, transparent);
+  color: var(--dr-dim);
+  cursor: pointer;
+}
+.crimson-fantasy-armory .armory-collapse:hover {
+  border-color: var(--dr-accent-2);
+  color: var(--dr-accent-2);
+}
+.crimson-fantasy-armory .armory-collapse i {
+  font-size: 8px;
+  transition: transform .16s ease;
+}
+.crimson-fantasy-armory .armory-container.is-collapsed .armory-collapse i,
+.crimson-fantasy-armory .armory-spell-rank.is-collapsed .armory-spell-rank-chevron { transform: rotate(-90deg); }
+.crimson-fantasy-armory .armory-container.is-collapsed .armory-container-head,
+.crimson-fantasy-armory .armory-spell-rank.is-collapsed .armory-spell-rank-head { border-bottom-color: transparent; }
+.crimson-fantasy-armory .armory-container.is-collapsed .armory-container-items,
+.crimson-fantasy-armory .armory-container.is-collapsed .armory-container-empty,
+.crimson-fantasy-armory .armory-spell-rank.is-collapsed .armory-spell-list { display: none; }
+
+/* ------------------------------------------------------ inspiration flame */
+.crimson-fantasy-armory .armory-inspiration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  min-width: 52px;
+  height: 52px;
+  padding: 5px 8px;
+  border: 1px solid var(--dr-line);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--dr-accent) 13%, var(--dr-panel-2)), var(--dr-panel));
+  color: var(--dr-dim);
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--dr-accent-2) 18%, transparent);
+  transition: color .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+.crimson-fantasy-armory .armory-inspiration i { font-size: 19px; line-height: 1; }
+.crimson-fantasy-armory .armory-inspiration span {
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .13em;
+}
+.crimson-fantasy-armory .armory-inspiration:hover:not(:disabled) {
+  border-color: var(--dr-accent-2);
+  color: var(--dr-accent-2);
+  transform: translateY(-1px);
+}
+.crimson-fantasy-armory .armory-inspiration.is-lit {
+  border-color: var(--dr-accent-2);
+  color: var(--dr-accent-2);
+  background: radial-gradient(circle at 50% 34%, color-mix(in srgb, var(--dr-accent-2) 26%, var(--dr-panel-2)), var(--dr-panel));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--dr-accent-2) 24%, transparent),
+    0 0 16px color-mix(in srgb, var(--dr-accent-2) 38%, transparent),
+    inset 0 0 14px color-mix(in srgb, var(--dr-accent) 22%, transparent);
+}
+.crimson-fantasy-armory .armory-inspiration.is-lit i {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--dr-accent-2) 75%, transparent));
+  animation: dr-inspiration-flicker 2.1s ease-in-out infinite;
+}
+.crimson-fantasy-armory .armory-inspiration:disabled { opacity: .55; cursor: default; }
+@keyframes dr-inspiration-flicker {
+  0%, 100% { transform: scale(1) rotate(-1deg); }
+  45% { transform: scale(1.08) rotate(1deg); }
+  70% { transform: scale(.97) rotate(-1deg); }
+}
+
+/* --------------------------------------------------------------- biography */
+.crimson-fantasy-armory .armory-bio-field { gap: 6px; }
+.crimson-fantasy-armory .armory-bio-field prose-mirror {
+  display: block;
+  min-height: 230px;
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--dr-bg) 82%, #000);
+  color: var(--dr-text);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.crimson-fantasy-armory .armory-bio-field prose-mirror .editor-container { min-height: 220px; }
+.crimson-fantasy-armory .armory-bio-field prose-mirror .editor-content,
+.crimson-fantasy-armory .armory-bio-field prose-mirror .prosemirror {
+  min-height: 190px;
+  padding: 10px 12px;
+  color: var(--dr-text);
+  line-height: 1.5;
+}
+.crimson-fantasy-armory .armory-bio-render {
+  min-height: 230px;
+  padding: 10px 12px;
+  border: 1px solid var(--dr-line);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--dr-bg) 82%, #000);
+  color: var(--dr-text);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+.crimson-fantasy-armory .armory-bio-render > :first-child { margin-top: 0; }
+.crimson-fantasy-armory .armory-bio-render > :last-child { margin-bottom: 0; }
+.crimson-fantasy-armory .armory-bio-render em { color: var(--dr-accent-2); }
+
+/* ------------------------------------------------------- floating satchel */
+#dragon-armory-pack {
+  --dr-pack-accent: #c8503c;
+  --dr-pack-accent-2: #ffb347;
+  position: fixed;
+  z-index: 100000 !important;
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  padding: 0;
+  border: 2px solid var(--dr-pack-accent-2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 24%, color-mix(in srgb, var(--dr-pack-accent-2) 34%, #2b1310), #120807 72%);
+  color: var(--dr-pack-accent-2);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow:
+    0 8px 24px #000a,
+    0 0 0 1px #0008,
+    0 0 18px color-mix(in srgb, var(--dr-pack-accent) 45%, transparent);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+#dragon-armory-pack:hover {
+  border-color: #fff0cc;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    0 10px 28px #000c,
+    0 0 0 1px #ffb347aa,
+    0 0 24px color-mix(in srgb, var(--dr-pack-accent-2) 55%, transparent);
+}
+#dragon-armory-pack.is-dragging {
+  cursor: grabbing;
+  transform: scale(1.07);
+  transition: none;
+}
+#dragon-armory-pack:focus-visible {
+  outline: 2px solid var(--dr-pack-accent-2);
+  outline-offset: 3px;
+}
+#dragon-armory-pack svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--dr-pack-accent-2) 55%, transparent));
+}

@@ -1,0 +1,39 @@
+{
+  "id": "crimson-fantasy-armory",
+  "title": "Crimson Fantasy Armory",
+  "description": "A dragon-hoard character sheet for dnd5e: hoard gauge, initiative plate, item pages, rest controls and a toolbox that launches active Crimson modules.",
+  "version": "0.1.6",
+  "authors": [
+    {
+      "name": "Faewns-Hellion",
+      "url": "https://github.com/Faewns-Hellion"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14.368",
+    "verified": "14.368"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "5.3.3",
+          "verified": "6.0.6"
+        }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/armory.mjs"
+  ],
+  "styles": [
+    "styles/armory.css"
+  ],
+  "readme": "https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/README.md",
+  "url": "https://github.com/Faewns-Hellion/Crimson-Core",
+  "manifest": "https://github.com/Faewns-Hellion/Crimson-Core/releases/download/crimson-fantasy-armory-v0.1.1/module.json",
+  "download": "https://github.com/Faewns-Hellion/Crimson-Core/releases/download/crimson-fantasy-armory-v0.1.1/crimson-fantasy-armory-0.1.1.zip",
+  "bugs": "https://github.com/Faewns-Hellion/Crimson-Core/issues"
+}

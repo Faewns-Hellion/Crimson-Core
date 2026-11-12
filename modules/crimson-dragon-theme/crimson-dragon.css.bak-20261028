@@ -1,0 +1,162 @@
+/* Crimson Dragon — app-wide Foundry VTT 14 skin. No canvas or artwork filters. */
+body, body :is(.application, .app, .themed, .theme-dark, .theme-light, .theme-fantasy, .theme-scifi) {
+  color-scheme: dark;
+  --color-scheme: dark;
+  --color-warm-1: #ffae66;
+  --color-warm-2: #ae293a;
+  --color-warm-3: #401923;
+  --color-cool-3: #45202a;
+  --color-cool-4: #210f17;
+  --color-cool-5: #140b10;
+  --color-cool-5-25: #140b1040;
+  --color-cool-5-50: #140b1080;
+  --color-cool-5-75: #140b10bf;
+  --color-cool-5-90: #140b10f5;
+  --color-text-primary: #f3e2d8;
+  --color-text-emphatic: #fff2dd;
+  --color-text-secondary: #d6b7ad;
+  --color-text-subtle: #bd9691;
+  --color-text-hyperlink: #ffb977;
+  --color-text-selection: #fff4e5;
+  --color-text-selection-bg: #8c2438;
+  --color-border: #78404a;
+  --color-border-highlight: #f26958;
+  --color-border-highlight-alt: #e1b36b;
+  --color-shadow-primary: #e64142;
+  --color-shadow-highlight: #ff9b58;
+  --background: #1c1017f7;
+  --color-header-background: #3f131e;
+  --color-tabs-border: #90505a;
+  --color-fieldset-border: #78404a;
+  --color-form-label: #edcdbd;
+  --color-form-label-hover: #fff1d9;
+  --color-form-hint: #c4a29a;
+  --color-form-hint-hover: #f3d7c4;
+  --color-select-option-bg: #24121b;
+  --color-data-border: #6e3542;
+  --color-data-background: #25131b;
+  --button-background-color: #481923;
+  --button-border-color: #a34551;
+  --button-text-color: #ffe4c9;
+  --button-hover-background-color: #762535;
+  --button-hover-border-color: #e8ad68;
+  --button-hover-text-color: #fff7e8;
+  --button-focus-outline-color: #e8ad68;
+  --input-background-color: #180d14;
+  --input-border-color: #79414c;
+  --input-text-color: #f8e7dc;
+  --input-placeholder-color: #b88f89;
+  --input-focus-outline-color: #ffb46c;
+  --checkbox-checked-color: #ec7660;
+  --checkbox-background-color: #30131c;
+  --color-text-dark-primary: #f3e2d8;
+  --color-text-dark-secondary: #d6b7ad;
+  --color-text-dark-header: #fff2dd;
+  --color-text-dark-inactive: #bd9691;
+  --color-border-light-primary: #78404a;
+  --color-border-light-secondary: #63313b;
+  --color-border-dark: #78404a;
+  --dnd5e-color-gold: #d9ad68;
+  --dnd5e-color-parchment: #25151c;
+  --dnd5e-color-card: #25151c;
+}
+body :is(.application, .app) {
+  background: linear-gradient(140deg, #32131e, #160d14 68%);
+  color: #f3e2d8;
+  border: 1px solid #8e414f;
+  box-shadow: 0 12px 38px #0009, inset 0 1px #e6a65e44;
+  border-radius: 9px;
+}
+body :is(.application, .app) .window-header {
+  background: linear-gradient(105deg, #300e18, #701d30 55%, #2b1019);
+  color: #ffe2ad;
+  border-bottom: 1px solid #cd955a;
+  border-radius: 8px 8px 0 0;
+}
+body :is(.application, .app) .window-title {
+  color: #ffe2ad;
+  font-family: Georgia, "Palatino Linotype", serif;
+  letter-spacing: .035em;
+  text-shadow: 0 2px 3px #000;
+}
+body :is(.application, .app) .window-content {
+  background: linear-gradient(135deg, #2a141df5, #170e16fa);
+  color: #f3e2d8;
+}
+body :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), select, textarea) {
+  background-color: #180d14;
+  color: #f8e7dc;
+  border-color: #79414c;
+}
+body :is(input, select, textarea, button, a):focus-visible {
+  outline: 2px solid #ffc583;
+  outline-offset: 2px;
+}
+body select option { background: #24121b; color: #f8e7dc; }
+body :is(button, .button) { color: #ffe4c9; }
+body :is(button, .button):not(:disabled):hover {
+  border-color: #e8ad68;
+  box-shadow: 0 0 8px #dc35474d;
+}
+body :is(button, input, select, textarea):disabled { opacity: .55; }
+body :is(.tabs, nav.tabs) [data-tab].active {
+  color: #ffd99b;
+  text-shadow: 0 0 9px #f04b43;
+  border-bottom-color: #efb96f;
+}
+body :is(#sidebar, #sidebar-content, .sidebar-popout, #players, #hotbar, #context-menu, #tooltip) {
+  background: linear-gradient(145deg, #31131ef7, #140c13fa);
+  color: #f3e2d8;
+  border-color: #8e414f;
+}
+body :is(#sidebar-tabs, #sidebar .tabs) { border-bottom-color: #c18c57; }
+body :is(#sidebar-tabs, #sidebar .tabs) .active { color: #ffd99b; box-shadow: 0 0 9px #a81e35; }
+body :is(#scene-controls, #controls) :is(button, .control-tool),
+body #navigation .scene, body #scene-navigation .scene,
+body #hotbar .macro {
+  background: linear-gradient(#421522, #1c0e16);
+  color: #f8dfcb;
+  border-color: #98505b;
+}
+body :is(#scene-controls, #controls) :is(button, .control-tool).active,
+body #hotbar .macro:hover {
+  background: #752338;
+  border-color: #eabc76;
+  box-shadow: 0 0 8px #d84445;
+}
+body .chat-message {
+  background: linear-gradient(120deg, #351b25, #21131c);
+  color: #f4e0d5;
+  border: 1px solid #844350;
+  border-left: 3px solid #d65354;
+}
+body .chat-message :is(.message-header, .message-sender, .flavor-text) { color: #e9c5b4; }
+body .chat-message :is(.dice-total, .dice-formula, .dice-tooltip .dice) {
+  background: #180e15;
+  color: #ffe0a9;
+  border-color: #74404b;
+}
+body :is(.journal-entry-content, .journal-entry-page, .editor-content, prose-mirror) {
+  color: #f3e2d8;
+}
+body .journal-entry-content { background: #21131c; }
+body :is(.directory-item, .combatant):hover { background-color: #68253655; }
+body .combatant.active { background: #76243866; border-color: #d9a363; }
+body :is(.application, .app) :is(h1, h2, h3, legend) { color: #f3d09a; border-color: #81434b; }
+body :is(.application, .app) :is(a.content-link, a.inline-roll) {
+  background: #48212c;
+  color: #ffdcab;
+  border-color: #aa6470;
+}
+body:not(.game) {
+  background-color: #14090f;
+  background-image: radial-gradient(ellipse at 50% 100%, #8c182b88, transparent 65%),
+    repeating-conic-gradient(from 45deg, #ffffff03 0% 25%, transparent 0% 50%);
+  background-size: auto, 44px 44px;
+}
+body:not(.game) :is(#setup, #join-game, #auth, #setup-packages) {
+  --background: #1c1017f5;
+  color: #f3e2d8;
+}
+body ::selection { color: #fff4e5; background: #8c2438; }
+body { scrollbar-color: #ac4b5c #190f16; }

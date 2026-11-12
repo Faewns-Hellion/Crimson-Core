@@ -1,0 +1,18 @@
+{
+  "id": "crimson-hub",
+  "title": "Crimson Core",
+  "description": "Shared Crimson navigation, compatibility helpers, the Crimson Quest Board, the Crimson Garrison ledger, Crimson Fleet navigation and theme-aware interface styling.",
+  "version": "1.3.1",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.370"
+  },
+  "esmodules": [
+    "scripts/controls.mjs"
+  ],
+  "styles": [
+    "styles/core.css",
+    "styles/quest-board.css",
+    "styles/garrison.css"
+  ]
+}

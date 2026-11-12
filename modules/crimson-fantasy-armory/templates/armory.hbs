@@ -1,0 +1,502 @@
+<div class="armory-shell">
+
+  <header class="armory-head">
+    <figure class="armory-portrait">
+      <img src="{{actor.img}}" alt="{{actor.name}}" {{#if editable}}data-edit="img"{{/if}}>
+      <figcaption>{{header.species}}</figcaption>
+    </figure>
+
+    <div class="armory-id">
+      <p class="armory-eyebrow">CRIMSON FANTASY ARMORY <span class="armory-seal">{{header.kind}}</span></p>
+      {{#if editable}}
+      <input class="armory-name" type="text" name="name" value="{{actor.name}}" aria-label="Character name">
+      {{else}}
+      <h1 class="armory-name is-static">{{actor.name}}</h1>
+      {{/if}}
+      <p class="armory-sub">{{header.className}} <span class="armory-dot">·</span> {{header.rank}}{{#if header.showPB}} <span class="armory-dot">·</span> PB +{{header.prof}}{{/if}}</p>
+
+      <div class="armory-hp">
+        <span class="armory-hp-bar" role="meter" aria-label="Hit points" aria-valuemin="0" aria-valuemax="{{header.hp.max}}" aria-valuenow="{{header.hp.value}}">
+          <span class="armory-hp-fill" style="width: {{header.hp.pct}}%"></span>
+        </span>
+        <span class="armory-hp-read">
+          <input type="number" name="system.attributes.hp.value" value="{{header.hp.value}}" {{#unless editable}}disabled{{/unless}} aria-label="Current hit points">
+          <span class="armory-hp-max">/ {{header.hp.max}}</span>
+        </span>
+        <label class="armory-chip">TEMP
+          <input type="number" name="system.attributes.hp.temp" value="{{header.hp.temp}}" {{#unless editable}}disabled{{/unless}} aria-label="Temporary hit points">
+        </label>
+      </div>
+    </div>
+
+    <div class="armory-gauges">
+      <div class="armory-gauge armory-gauge--ac">
+        <span class="armory-gauge-label">AC</span>
+        <span class="armory-gauge-value">{{header.ac}}</span>
+      </div>
+      <div class="armory-gauge">
+        <span class="armory-gauge-label">SPEED</span>
+        <span class="armory-gauge-value">{{header.speed}}<small>ft</small></span>
+      </div>
+      <div class="armory-gauge armory-gauge--init">
+        <span class="armory-gauge-label">INIT</span>
+        <button type="button" class="armory-gauge-value armory-init-roll" data-action="rollInitiative" data-tooltip="Roll initiative">{{header.init}}</button>
+      </div>
+      <div class="armory-gauge armory-gauge--wealth" data-tooltip="{{header.coinsTitle}}">
+        <span class="armory-gauge-label">POCKET</span>
+        <span class="armory-gauge-value">{{header.coins}}<small>{{coinsAbbr}}</small></span>
+      </div>
+      <button type="button" class="armory-inspiration{{#if header.inspiration}} is-lit{{/if}}" data-action="toggleInspiration" data-tooltip="Toggle inspiration" aria-label="Inspiration" aria-pressed="{{#if header.inspiration}}true{{else}}false{{/if}}" {{#unless editable}}disabled{{/unless}}>
+        <i class="fa-solid fa-fire-flame-curved" aria-hidden="true"></i>
+        <span>INSP</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="armory-nav" aria-label="Armory pages">
+    {{#each pages}}
+    <button type="button" class="armory-nav-tab{{#if this.active}} is-active{{/if}}" data-action="page" data-tab="{{this.id}}">
+      <i class="{{this.icon}}" aria-hidden="true"></i>
+      <span>{{this.label}}</span>
+    </button>
+    {{/each}}
+    <span class="armory-nav-tail">
+      <button type="button" class="armory-rest armory-share-toggle" data-action="toggleShare" data-tooltip="Crimson tools" aria-label="Crimson tools">
+        <i class="fa-solid fa-book-bookmark" aria-hidden="true"></i>
+      </button>
+      <span class="armory-chip armory-chip--rest">EXHAUSTION {{header.exhaustion}}</span>
+      <button type="button" class="armory-rest" data-action="rest" data-type="short" data-tooltip="Short rest"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></button>
+      <button type="button" class="armory-rest" data-action="rest" data-type="long" data-tooltip="Long rest"><i class="fa-solid fa-campground" aria-hidden="true"></i></button>
+      {{#if integrations.itemPileActor}}
+      <button type="button" class="armory-rest" data-action="openPile" data-tooltip="Open Item Piles"><i class="fa-solid fa-box-open" aria-hidden="true"></i></button>
+      {{/if}}
+      <button type="button" class="armory-rest armory-scheme-toggle" data-action="toggleScheme" data-tooltip="Dragon colour"><i class="fa-solid fa-dragon" aria-hidden="true"></i></button>
+    </span>
+
+    <div class="armory-schemes" data-scheme-panel role="menu" aria-label="Dragon colour">
+      <p class="armory-schemes-title">DRAGON COLOUR</p>
+      {{#each schemeGroups}}
+      <p class="armory-scheme-group">{{this.label}}</p>
+      <div class="armory-scheme-list">
+        {{#each this.schemes}}
+        <button type="button" class="armory-swatch{{#if this.active}} is-active{{/if}}" data-action="setScheme" data-scheme="{{this.id}}" role="menuitem">
+          <span class="armory-swatch-chip" style="background: {{this.gradient}}" aria-hidden="true"></span>
+          <span class="armory-swatch-label">{{this.label}}</span>
+        </button>
+        {{/each}}
+      </div>
+      {{/each}}
+
+      <p class="armory-scheme-group">CUSTOM</p>
+      <div class="armory-custom">
+        <label class="armory-color">SCALE
+          <input type="color" data-color="accent" value="{{custom.accent}}" aria-label="Scale colour">
+        </label>
+        <label class="armory-color">GLOW
+          <input type="color" data-color="accent2" value="{{custom.accent2}}" aria-label="Glow colour">
+        </label>
+        <label class="armory-color">CAVE
+          <input type="color" data-color="bg" value="{{custom.bg}}" aria-label="Background colour">
+        </label>
+      </div>
+      <button type="button" class="armory-custom-apply" data-action="setScheme" data-scheme="custom">Use custom colours</button>
+    </div>
+
+    <div class="armory-shares" data-share-panel role="menu" aria-label="Crimson tools and handouts">
+      <p class="armory-schemes-title">CRIMSON</p>
+      {{#if moduleTools.length}}
+      <p class="armory-scheme-group">TOOLS</p>
+      {{#each moduleTools}}
+      <button type="button" class="armory-share-link armory-tool-link" data-action="useTool" data-tool-id="{{this.id}}" role="menuitem">
+        <span class="armory-share-name"><i class="{{this.icon}}" aria-hidden="true"></i> {{this.title}}</span>
+      </button>
+      {{/each}}
+      {{/if}}
+      <p class="armory-scheme-group">HANDOUTS</p>
+      {{#each sharedJournals}}
+      <button type="button" class="armory-share-link" data-action="openJournal" data-journal-id="{{this.id}}" role="menuitem">
+        <span class="armory-share-name">{{this.name}}</span>
+        {{#if this.folder}}<small class="armory-share-folder">{{this.folder}}</small>{{/if}}
+      </button>
+      {{else}}
+      <p class="armory-share-empty">{{#if isGM}}No handouts picked yet — use the button below.{{else}}Nothing has been shared with you yet.{{/if}}</p>
+      {{/each}}
+      {{#if isGM}}
+      <button type="button" class="armory-share-manage" data-action="chooseShare">CHOOSE HANDOUTS</button>
+      {{/if}}
+    </div>
+  </nav>
+
+  <section class="armory-body">
+
+    <div class="armory-page" data-panel="core">
+      {{#if vehicle}}
+      <section class="armory-panel armory-panel--vehicle">
+        <h2 class="armory-panel-title"><i class="fa-solid fa-gears" aria-hidden="true"></i> CHASSIS <small>{{header.className}}</small></h2>
+        <div class="armory-vehicle-grid">
+          <div class="armory-stat"><span class="armory-stat-label">ACTIONS</span><span class="armory-stat-value">{{vehicle.actions.remaining}}<small>/{{vehicle.actions.max}}</small></span></div>
+          <div class="armory-stat"><span class="armory-stat-label">CREW</span><span class="armory-stat-value">{{vehicle.crew.value}}<small>/{{vehicle.crew.max}}</small></span></div>
+          <div class="armory-stat"><span class="armory-stat-label">CARGO</span><span class="armory-stat-value">{{vehicle.cargo.value}}<small>{{vehicle.cargo.units}}</small></span></div>
+          <div class="armory-stat"><span class="armory-stat-label">QUALITY</span><span class="armory-stat-value">{{vehicle.quality}}</span></div>
+        </div>
+      </section>
+      {{/if}}
+
+      <div class="armory-core-grid">
+        {{#if hasAbilities}}
+        <div class="armory-panel armory-panel--abilities">
+          <h2 class="armory-panel-title"><i class="fa-solid fa-dragon" aria-hidden="true"></i> MIGHT</h2>
+          <div class="armory-abilities">
+            {{#each abilities}}
+            <article class="armory-ability">
+              <span class="armory-ability-label" data-tooltip="{{this.label}}">{{this.abbr}}</span>
+              <span class="armory-ability-mod">{{this.mod}}</span>
+              <input type="number" class="armory-ability-input" name="system.abilities.{{this.key}}.value" value="{{this.value}}" {{#unless ../editable}}disabled{{/unless}} aria-label="{{this.label}} score">
+              <span class="armory-ability-actions">
+                <button type="button" data-action="rollAbility" data-ability="{{this.key}}" data-tooltip="Ability check"><i class="fa-solid fa-dice-d20" aria-hidden="true"></i></button>
+                <button type="button" data-action="rollSave" data-ability="{{this.key}}" data-tooltip="Saving throw"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></button>
+              </span>
+            </article>
+            {{/each}}
+          </div>
+
+          <h2 class="armory-panel-title"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> SAVING THROWS</h2>
+          <ul class="armory-saves">
+            {{#each saves}}
+            <li>
+              <button type="button" class="armory-save" data-action="rollSave" data-ability="{{this.key}}">
+                <span class="armory-prof-dot{{#if this.saveProf}} is-on{{/if}}" aria-hidden="true"></span>
+                <span class="armory-save-label">{{this.label}}</span>
+                <span class="armory-save-value">{{this.save}}</span>
+              </button>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/if}}
+
+        {{#if skills.length}}
+        <div class="armory-panel armory-panel--skills">
+          <h2 class="armory-panel-title"><i class="fa-solid fa-list-check" aria-hidden="true"></i> TALENTS</h2>
+          <ul class="armory-skills">
+            {{#each skills}}
+            <li class="armory-skill{{#if this.expert}} is-expert{{else}}{{#if this.proficient}} is-proficient{{/if}}{{/if}}">
+              <span class="armory-prof-dot{{#if this.proficient}} is-on{{/if}}" aria-hidden="true"></span>
+              <button type="button" class="armory-skill-roll" data-action="rollSkill" data-skill="{{this.id}}">{{this.label}}</button>
+              <span class="armory-skill-ability">{{this.ability}}</span>
+              <span class="armory-skill-total">{{this.total}}</span>
+              {{#if ../editable}}
+              <button type="button" class="armory-skill-cycle" data-action="cycleSkill" data-skill="{{this.id}}" data-tooltip="Cycle proficiency"><i class="fa-solid fa-up-down" aria-hidden="true"></i></button>
+              {{/if}}
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="armory-page" data-panel="hoard">
+      <div class="armory-page-head">
+        <h2 class="armory-panel-title"><i class="fa-solid fa-treasure-chest" aria-hidden="true"></i> HOARD <small>{{gearCount}} entries · {{load.weight}} lb</small></h2>
+        <p class="armory-hint">Drag items onto this actor to add them to the hoard. Pocket money is carried on your person; container and bank funds stay with their containers.</p>
+      </div>
+
+      <div class="armory-coins" data-tooltip="Coins carried on your person. Container and bank funds are not included.">
+        <span class="armory-purse-label"><i class="fa-solid fa-hand-holding-dollar" aria-hidden="true"></i> POCKET</span>
+        {{#each currencies}}
+        <label class="armory-coin" data-currency="{{this.key}}" data-tooltip="{{this.label}}">
+          <span class="armory-coin-name">{{this.label}}</span>
+          <input type="number" name="system.currency.{{this.key}}" value="{{this.value}}" {{#unless @root.editable}}disabled{{/unless}} aria-label="{{this.label}}">
+        </label>
+        {{/each}}
+        <span class="armory-load">
+          <span class="armory-load-bar"><span class="armory-load-fill" style="width: {{load.pct}}%"></span></span>
+          <span class="armory-load-text">{{load.weight}} / {{load.capacity}} lb</span>
+        </span>
+      </div>
+
+      {{#if storedWealth.hasFunds}}
+      <aside class="armory-bank" data-tooltip="Kept in containers and banks. This is never added to pocket money.">
+        <span class="armory-bank-icon"><i class="fa-solid fa-vault" aria-hidden="true"></i></span>
+        <span class="armory-bank-copy">
+          <strong>CONTAINER FUNDS</strong>
+          <small>{{storedWealth.countLabel}} · not pocket money</small>
+        </span>
+        <span class="armory-bank-total">{{storedWealth.summary}}</span>
+      </aside>
+      {{/if}}
+
+      {{#if containers.length}}
+      <section class="armory-containers">
+        <div class="armory-page-head">
+          <h2 class="armory-panel-title"><i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i> CONTAINERS <small>{{containerCount}} containers · {{storedCount}} stowed</small></h2>
+          <p class="armory-hint">Each container keeps its own inventory. Nested containers stay nested inside their parent.</p>
+        </div>
+
+        <div class="armory-container-grid">
+          {{#each containers}}
+          <article class="armory-container{{#unless this.expanded}} is-collapsed{{/unless}}" data-item-id="{{this.id}}">
+            <header class="armory-container-head">
+              <button type="button" class="armory-collapse" data-action="toggleCollapse" data-collapse-key="container:{{this.id}}" aria-expanded="{{#if this.expanded}}true{{else}}false{{/if}}" data-tooltip="Toggle container">
+                <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+              </button>
+              <img src="{{this.img}}" alt="" class="armory-item-img" data-type="{{this.type}}" data-item-id="{{this.id}}">
+              <button type="button" class="armory-container-name" data-action="editItem" data-item-id="{{this.id}}">
+                {{this.name}}
+                <small>{{this.contentsLabel}}{{#if this.currencyLabel}} · {{this.currencyLabel}}{{/if}}</small>
+              </button>
+              <span class="armory-item-qty">&times;{{this.qty}}</span>
+              <span class="armory-item-actions">
+                {{#if @root.editable}}
+                <button type="button" data-action="toggleEquip" data-item-id="{{this.id}}" data-tooltip="Equip container"><i class="fa-solid fa-hand-fist" aria-hidden="true"></i></button>
+                <button type="button" class="is-danger" data-action="deleteItem" data-item-id="{{this.id}}" data-tooltip="Remove container"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
+                {{/if}}
+              </span>
+            </header>
+
+            {{#if this.rows.length}}
+            <ul class="armory-container-items">
+              {{#each this.rows}}
+              <li class="armory-item armory-item--nested{{#if this.equipped}} is-equipped{{/if}}{{#if this.isContainer}} is-container{{/if}}" style="--nest-depth: {{this.depth}}" data-item-id="{{this.id}}">
+                <img src="{{this.img}}" alt="" class="armory-item-img" data-type="{{this.type}}" data-item-id="{{this.id}}">
+                <button type="button" class="armory-item-name" data-action="editItem" data-item-id="{{this.id}}">
+                  {{this.name}}{{#if this.hasUses}}<small>{{this.uses.value}}/{{this.uses.max}}</small>{{/if}}
+                  {{#if this.isContainer}}<span class="armory-container-tag">CONTAINER</span>{{/if}}
+                  {{#if this.currencyLabel}}<span class="armory-container-tag armory-container-tag--money">{{this.currencyLabel}}</span>{{/if}}
+                </button>
+                <span class="armory-item-qty">&times;{{this.qty}}</span>
+                <span class="armory-item-actions">
+                  {{#if @root.editable}}
+                  <button type="button" data-action="toggleEquip" data-item-id="{{this.id}}" data-tooltip="Equip"><i class="fa-solid fa-hand-fist" aria-hidden="true"></i></button>
+                  {{/if}}
+                  {{#if this.usable}}
+                  <button type="button" data-action="useItem" data-item-id="{{this.id}}" data-tooltip="Use"><i class="fa-solid fa-flask" aria-hidden="true"></i></button>
+                  {{/if}}
+                  {{#if @root.editable}}
+                  <button type="button" class="is-danger" data-action="deleteItem" data-item-id="{{this.id}}" data-tooltip="Remove"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
+                  {{/if}}
+                </span>
+              </li>
+              {{/each}}
+            </ul>
+            {{else}}
+            <p class="armory-container-empty">Nothing is stored in this container.</p>
+            {{/if}}
+          </article>
+          {{/each}}
+        </div>
+      </section>
+      {{/if}}
+
+      <div class="armory-loadout">
+        <section class="armory-panel">
+          <h3 class="armory-list-title">WEAPONS</h3>
+          <ul class="armory-items">
+            {{#each lists.weapons}}
+            <li class="armory-item{{#if this.equipped}} is-equipped{{/if}}" data-item-id="{{this.id}}">
+              <img src="{{this.img}}" alt="" class="armory-item-img" data-type="{{this.type}}" data-item-id="{{this.id}}">
+              <button type="button" class="armory-item-name" data-action="editItem" data-item-id="{{this.id}}">
+                {{this.name}}{{#if this.hasUses}}<small>{{this.uses.value}}/{{this.uses.max}}</small>{{/if}}
+              </button>
+              <span class="armory-item-qty">&times;{{this.qty}}</span>
+              <span class="armory-item-actions">
+                {{#if @root.editable}}
+                <button type="button" data-action="toggleEquip" data-item-id="{{this.id}}" data-tooltip="Equip"><i class="fa-solid fa-hand-fist" aria-hidden="true"></i></button>
+                {{/if}}
+                <button type="button" data-action="useItem" data-item-id="{{this.id}}" data-tooltip="Attack"><i class="fa-solid fa-crosshairs" aria-hidden="true"></i></button>
+                {{#if @root.editable}}
+                <button type="button" class="is-danger" data-action="deleteItem" data-item-id="{{this.id}}" data-tooltip="Remove"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
+                {{/if}}
+              </span>
+            </li>
+            {{else}}
+            <li class="armory-empty">No weapons in the hoard.</li>
+            {{/each}}
+          </ul>
+        </section>
+
+        <section class="armory-panel">
+          <h3 class="armory-list-title">SUPPLIES</h3>
+          <ul class="armory-items">
+            {{#each lists.consumables}}
+            <li class="armory-item" data-item-id="{{this.id}}">
+              <img src="{{this.img}}" alt="" class="armory-item-img" data-type="{{this.type}}" data-item-id="{{this.id}}">
+              <button type="button" class="armory-item-name" data-action="editItem" data-item-id="{{this.id}}">
+                {{this.name}}{{#if this.hasUses}}<small>{{this.uses.value}}/{{this.uses.max}}</small>{{/if}}
+              </button>
+              <span class="armory-item-qty">&times;{{this.qty}}</span>
+              <span class="armory-item-actions">
+                <button type="button" data-action="useItem" data-item-id="{{this.id}}" data-tooltip="Use"><i class="fa-solid fa-flask" aria-hidden="true"></i></button>
+                {{#if @root.editable}}
+                <button type="button" class="is-danger" data-action="deleteItem" data-item-id="{{this.id}}" data-tooltip="Remove"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
+                {{/if}}
+              </span>
+            </li>
+            {{else}}
+            <li class="armory-empty">No supplies in the hoard.</li>
+            {{/each}}
+          </ul>
+        </section>
+
+        <section class="armory-panel">
+          <h3 class="armory-list-title">TREASURE &amp; GEAR</h3>
+          <ul class="armory-items">
+            {{#each lists.gear}}
+            <li class="armory-item{{#if this.equipped}} is-equipped{{/if}}" data-item-id="{{this.id}}">
+              <img src="{{this.img}}" alt="" class="armory-item-img" data-type="{{this.type}}" data-item-id="{{this.id}}">
+              <button type="button" class="armory-item-name" data-action="editItem" data-item-id="{{this.id}}">{{this.name}}</button>
+              <span class="armory-item-qty">&times;{{this.qty}}</span>
+              <span class="armory-item-actions">
+                {{#if @root.editable}}
+                <button type="button" data-action="toggleEquip" data-item-id="{{this.id}}" data-tooltip="Equip"><i class="fa-solid fa-hand-fist" aria-hidden="true"></i></button>
+                <button type="button" class="is-danger" data-action="deleteItem" data-item-id="{{this.id}}" data-tooltip="Remove"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
+                {{/if}}
+              </span>
+            </li>
+            {{else}}
+            <li class="armory-empty">No treasure in the hoard.</li>
+            {{/each}}
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <div class="armory-page" data-panel="powers">
+      <div class="armory-page-head">
+        <h2 class="armory-panel-title"><i class="fa-solid fa-fire-flame-curved" aria-hidden="true"></i> POWERS <small>{{powerCount}} entries</small></h2>
+        <p class="armory-hint">Breath, bloodline and spellcraft carried by this dragon.</p>
+      </div>
+      <div class="armory-loadout">
+        <section class="armory-panel">
+          <h3 class="armory-list-title">FEATURES</h3>
+          <ul class="armory-items">
+            {{#each lists.features}}
+            <li class="armory-item" data-item-id="{{this.id}}">
+              <img src="{{this.img}}" alt="" class="armory-item-img" data-type="{{this.type}}" data-item-id="{{this.id}}">
+              <button type="button" class="armory-item-name" data-action="editItem" data-item-id="{{this.id}}">
+                {{this.name}}{{#if this.hasUses}}<small>{{this.uses.value}}/{{this.uses.max}}</small>{{/if}}
+              </button>
+              <span class="armory-item-actions">
+                {{#if this.usable}}
+                <button type="button" data-action="useItem" data-item-id="{{this.id}}" data-tooltip="Activate"><i class="fa-solid fa-bolt" aria-hidden="true"></i></button>
+                {{/if}}
+              </span>
+            </li>
+            {{else}}
+            <li class="armory-empty">No features yet.</li>
+            {{/each}}
+          </ul>
+        </section>
+
+        <section class="armory-panel armory-panel--spells">
+          <div class="armory-spell-head">
+            <h3 class="armory-list-title">SPELLS <small>{{spellCount}} known</small></h3>
+          </div>
+
+          {{#if spellRanks.length}}
+          <div class="armory-spell-ranks">
+            {{#if showSpellRankMenu}}
+            <div class="armory-spell-menu" role="tablist" aria-label="Spell ranks">
+              {{#each spellRanks}}
+              <button type="button" class="armory-spell-tab{{#if this.active}} is-active{{/if}}" data-action="selectSpellRank" data-rank="{{this.level}}" role="tab" aria-selected="{{#if this.active}}true{{else}}false{{/if}}">
+                <span class="armory-spell-tab-label">{{this.tabLabel}}</span>
+                <span class="armory-spell-tab-count">{{this.count}}</span>
+              </button>
+              {{/each}}
+              <button type="button" class="armory-spell-tab armory-spell-tab--all{{#if allSpellRanksActive}} is-active{{/if}}" data-action="selectSpellRank" data-rank="all" role="tab" aria-selected="{{#if allSpellRanksActive}}true{{else}}false{{/if}}">
+                <span class="armory-spell-tab-label">ALL</span>
+                <span class="armory-spell-tab-count">{{spellCount}}</span>
+              </button>
+            </div>
+            {{/if}}
+
+            {{#each spellRanks}}
+            <section class="armory-spell-rank{{#unless this.expanded}} is-collapsed{{/unless}}{{#unless this.active}} is-rank-hidden{{/unless}}" data-rank="{{this.level}}"{{#unless this.active}} hidden{{/unless}}>
+              <header class="armory-spell-rank-head">
+                <button type="button" class="armory-spell-rank-toggle" data-action="toggleCollapse" data-collapse-key="rank:{{this.level}}" aria-expanded="{{#if this.expanded}}true{{else}}false{{/if}}" data-tooltip="Toggle spell rank">
+                  <i class="fa-solid fa-chevron-down armory-spell-rank-chevron" aria-hidden="true"></i>
+                  <span class="armory-spell-rank-chip">{{this.chipLabel}}</span>
+                  <span class="armory-spell-rank-title">{{this.label}}</span>
+                  <span class="armory-spell-rank-count">{{this.countLabel}}{{#if this.preparedCount}} · {{this.preparedCount}} prepared{{/if}}</span>
+                </button>
+              </header>
+
+              <ul class="armory-items armory-spell-list">
+                {{#each this.spells}}
+                <li class="armory-item armory-spell{{#if this.prepared}} is-prepared{{/if}}" data-item-id="{{this.id}}">
+                  <span class="armory-spell-state{{#if this.prepared}} is-on{{/if}}" data-tooltip="{{this.preparedLabel}}" aria-label="{{this.preparedLabel}}">
+                    <i class="fa-solid {{#if this.prepared}}fa-circle-check{{else}}fa-circle{{/if}}" aria-hidden="true"></i>
+                  </span>
+                  <img src="{{this.img}}" alt="" class="armory-item-img" data-type="{{this.type}}" data-item-id="{{this.id}}">
+                  <div class="armory-spell-body">
+                    <button type="button" class="armory-item-name armory-spell-name" data-action="editItem" data-item-id="{{this.id}}">{{this.name}}</button>
+                    <p class="armory-spell-meta">
+                      {{#if this.activation}}<span>{{this.activation}}</span>{{/if}}
+                      {{#if this.range}}<span>{{this.range}}</span>{{/if}}
+                      {{#if this.duration}}<span>{{this.duration}}</span>{{/if}}
+                      {{#if this.components}}<span>{{this.components}}</span>{{/if}}
+                      {{#each this.tags}}<span class="armory-spell-tag">{{this}}</span>{{/each}}
+                    </p>
+                  </div>
+                  <span class="armory-spell-school" data-tooltip="{{this.school.label}}">{{this.school.abbr}}</span>
+                  <span class="armory-item-actions">
+                    <button type="button" data-action="useItem" data-item-id="{{this.id}}" data-tooltip="Cast"><i class="fa-solid fa-wand-sparkles" aria-hidden="true"></i></button>
+                  </span>
+                </li>
+                {{/each}}
+              </ul>
+            </section>
+            {{/each}}
+          </div>
+          {{else}}
+          <p class="armory-empty">No spells yet.</p>
+          {{/if}}
+        </section>
+      </div>
+    </div>
+
+    <div class="armory-page" data-panel="log">
+      <section class="armory-panel armory-panel--log">
+        <h2 class="armory-panel-title"><i class="fa-solid fa-book-open" aria-hidden="true"></i> CHRONICLE</h2>
+        <div class="armory-log-grid">
+          <label class="armory-field">EXHAUSTION
+            <input type="number" name="system.attributes.exhaustion" value="{{header.exhaustion}}" min="0" max="6" {{#unless editable}}disabled{{/unless}}>
+          </label>
+          <label class="armory-field">INSPIRATION
+            <input type="checkbox" name="system.attributes.inspiration" {{checked header.inspiration}} {{#unless editable}}disabled{{/unless}}>
+          </label>
+          <div class="armory-field armory-field--wide armory-bio-field">BIOGRAPHY
+            {{#if editable}}
+            <prose-mirror name="system.details.biography.value" value="{{bio}}" document-uuid="{{actor.uuid}}" class="armory-bio-editor"></prose-mirror>
+            {{else}}
+            <div class="armory-bio-render">{{{bio}}}</div>
+            {{/if}}
+          </div>
+        </div>
+      </section>
+
+      {{#if isGM}}
+      <section class="armory-panel armory-panel--utility">
+        <h2 class="armory-panel-title"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> HOARD KEEPER <small>GM</small></h2>
+        <p class="armory-hint">Maintenance passes over the item art stored in this world.</p>
+        <div class="armory-utility-actions">
+          <button type="button" class="armory-utility" data-action="repairArt">
+            <i class="fa-solid fa-gem" aria-hidden="true"></i>
+            <span>
+              <strong>Replace White Icons</strong>
+              <small>Swap flat core line art for colour art from the installing icon library</small>
+            </span>
+          </button>
+        </div>
+      </section>
+      {{/if}}
+    </div>
+
+  </section>
+
+  <footer class="armory-foot">
+    <span>CRIMSON FANTASY ARMORY // {{actor.name}}</span>
+    <span class="armory-foot-status"><i class="fa-solid fa-dragon" aria-hidden="true"></i> {{schemeLabel}}</span>
+  </footer>
+</div>

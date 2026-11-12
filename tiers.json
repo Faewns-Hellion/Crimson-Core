@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "currency": "USD",
+  "billing": "monthly",
+  "tiers": [
+    {
+      "id": "initiate",
+      "name": "Crimson Initiate",
+      "price": 0,
+      "public": true,
+      "description": "Free core, starter sheet, theme and table utilities.",
+      "modules": [
+        "crimson-hub",
+        "crimson-fantasy-armory",
+        "crimson-dragon-theme",
+        "crimson-drafts",
+        "crimson-icons"
+      ]
+    },
+    {
+      "id": "fantasy-table",
+      "name": "Fantasy Table",
+      "price": 5,
+      "public": false,
+      "description": "Fantasy GM toolkit built around the free Crimson Core.",
+      "modules": [
+        "crimson-fantasy-generator",
+        "crimson-shipwright",
+        "crimson-adaptations",
+        "crimson-random-items",
+        "crimson-bag",
+        "crimson-feats"
+      ]
+    },
+    {
+      "id": "galaxy-table",
+      "name": "Galaxy Table",
+      "price": 5,
+      "public": false,
+      "description": "Sci-fi GM toolkit built around the free Crimson Core.",
+      "modules": [
+        "crimson-galaxy-armory",
+        "neon-odyssey-generator",
+        "crimson-mechanic",
+        "crimson-rivals",
+        "crimson-currency",
+        "crimson-obsidian",
+        "crimson-feats"
+      ]
+    },
+    {
+      "id": "all-access",
+      "name": "Crimson All-Access",
+      "price": 10,
+      "public": false,
+      "description": "Every public module, all future public modules, early access, dev logs and votes.",
+      "modules": [
+        "crimson-adaptations",
+        "crimson-bag",
+        "crimson-currency",
+        "crimson-drafts",
+        "crimson-dragon-theme",
+        "crimson-fantasy-armory",
+        "crimson-fantasy-generator",
+        "crimson-feats",
+        "crimson-galaxy-armory",
+        "crimson-hub",
+        "crimson-icons",
+        "crimson-mechanic",
+        "crimson-obsidian",
+        "crimson-random-items",
+        "crimson-rivals",
+        "crimson-shipwright",
+        "neon-odyssey-generator"
+      ]
+    },
+    {
+      "id": "architect",
+      "name": "Crimson Architect",
+      "price": 20,
+      "public": false,
+      "description": "All-Access plus priority requests, setup help and credits.",
+      "modules": [
+        "crimson-adaptations",
+        "crimson-bag",
+        "crimson-currency",
+        "crimson-drafts",
+        "crimson-dragon-theme",
+        "crimson-fantasy-armory",
+        "crimson-fantasy-generator",
+        "crimson-feats",
+        "crimson-galaxy-armory",
+        "crimson-hub",
+        "crimson-icons",
+        "crimson-mechanic",
+        "crimson-obsidian",
+        "crimson-random-items",
+        "crimson-rivals",
+        "crimson-shipwright",
+        "neon-odyssey-generator"
+      ]
+    }
+  ]
+}

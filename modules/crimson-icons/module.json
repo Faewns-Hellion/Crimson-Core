@@ -1,0 +1,32 @@
+{
+  "id": "crimson-icons",
+  "title": "Crimson Icons",
+  "description": "Searchable icon library in the left scene controls, with drag-and-drop into editable image slots and supported builders.",
+  "version": "0.3.0",
+  "authors": [
+    {
+      "name": "Local Custom Modules"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.368"
+  },
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "styles": [
+    "styles/icons.css"
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "crimson-hub",
+        "type": "module",
+        "compatibility": {
+          "minimum": "1.1.0"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "crimson-drafts",
+  "title": "Crimson Drafts",
+  "description": "Persistent draft recovery for Crimson builders, Item Creator, and native document editing forms.",
+  "version": "0.1.1",
+  "authors": [
+    {
+      "name": "Local Custom Modules"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.368"
+  },
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "styles": [
+    "styles/drafts.css"
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "crimson-hub",
+        "type": "module",
+        "compatibility": {
+          "minimum": "1.1.0"
+        }
+      }
+    ]
+  }
+}
