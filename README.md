@@ -14,7 +14,7 @@ This repository is the **Crimson Initiate** tier from my collection of modules. 
 | **Crimson All-Access** | $10/month | All 17 public modules, every future public module, early access, dev logs and votes |
 | **Crimson Architect** | $20/month | All-Access, plus priority requests, setup help and credits |
 
-`tiers.json` is the machine-readable tier list. `crimson-feats` belongs to both table tiers, so it is delivered once and shared.
+`crimson-feats` belongs to both table tiers, so it is delivered once and shared.
 
 ## Free modules
 
@@ -28,19 +28,19 @@ This repository is the **Crimson Initiate** tier from my collection of modules. 
 
 ## Install
 
-Each module is a separate package:
+Every module is a separate package: install only the ones you want.
 
-- `modules/<module-id>/` is the complete source, including compendium packs.
-- `dist/<module-id>-<version>.zip` is the matching installable bundle. Its root is the module folder, so it can be extracted directly into `Data/modules/`.
+In Foundry VTT Setup, open **Add-on Modules → Install Module**, paste the manifest URL for the module, and install it:
 
-A module that advertises install URLs carries them in its own `module.json`, served from `main`:
+```text
+https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/modules/<module-id>/module.json
+```
 
-- manifest — `https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/modules/<module-id>/module.json`
-- package — `https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/dist/<module-id>-<version>.zip`
+Replace `<module-id>` with a name from the table above, for example `crimson-icons` or `crimson-hub`.
 
-`sync-modules.mjs` rewrites both fields on every sync, so they always match the version in `dist/`. Tags named `<module-id>-v<version>` are optional archival snapshots; installs always follow `main`.
+To install by hand instead, download `dist/<module-id>-<version>.zip`, unzip it into `Data/modules/`, and restart Foundry. The zip's root is the module folder, so it extracts straight into place.
 
-In Foundry VTT Setup, open **Add-on Modules → Install Module**, paste a module's manifest URL, and install it. Enable the module in **Manage Modules** in the world. Alternatively, unzip the package into `Data/modules/` and restart Foundry.
+Either way, enable the module in **Manage Modules** in your world.
 
 Only the free armory sheet ships here. Enable **one** armory module per world: every armory sheet registers for character, NPC and vehicle actors, and running two leaves neither as the default.
 
@@ -48,66 +48,6 @@ Only the free armory sheet ships here. Enable **one** armory module per world: e
 
 - Foundry VTT 14.368 or newer
 - dnd5e 5.3.3+ (verified on 6.0.6)
-
-## Updating the repository copies
-
-The repository mirrors the free modules installed in Foundry. After changing or installing one, run this from the repository root:
-
-```powershell
-node tools/sync-modules.mjs --source "C:\Users\PC-01\AppData\Local\FoundryVTT\Data\modules"
-```
-
-The script reads the public tier from `tiers.json`, copies those modules, drops only transient `LOCK` files, preserves LevelDB journals, and rebuilds `dist/<module-id>-<version>.zip`. It removes older zips of the same module so `dist/` holds exactly one current build per module. Paid and campaign-private modules are never copied.
-
-## Releasing a free module
-
-One command bumps the version, rebuilds the package, commits, tags and pushes:
-
-```powershell
-node tools/release-module.mjs crimson-hub
-node tools/release-module.mjs crimson-icons --bump minor
-node tools/release-module.mjs crimson-drafts --version 0.2.0
-```
-
-The version is bumped in the installed `module.json` under Foundry, so the live copy and the repository stay in agreement; the script then syncs, commits `Release <module-id> <version>`, tags `<module-id>-v<version>` and pushes `main` plus the tag. It refuses to run on a dirty tree, off `main`, when the tag already exists, or when another module changed during the sync.
-
-Add `--dry-run` to see the plan without touching anything, or `--no-push` to stop after the local commit and tag.
-
-## Packaging the paid tiers
-
-Paid modules are packaged from the installed Foundry copies straight into a private folder outside this repository:
-
-```powershell
-node tools/build-tier-packages.mjs --source "C:\Users\PC-01\AppData\Local\FoundryVTT\Data\modules"
-```
-
-That writes `../Crimson-Private-Releases` by default:
-
-```text
-release.json              summary of the generated release
-packages/                 one zip per module, deduplicated
-fantasy-table/            modules/ zips + tier.json
-galaxy-table/             modules/ zips + tier.json
-all-access/               modules/ zips + tier.json
-architect/                modules/ zips + tier.json
-```
-
-Pass `--out <dir>` to write somewhere else. Campaign-private modules are only packaged when their ids are passed with `--extra <ids>`, and they land in `campaign-private/`; their ids are deliberately absent from this repository.
-
-The script refuses to write inside this repository and refuses to overwrite a folder that it did not generate.
-
-## Source layout
-
-```text
-tiers.json                        machine-readable tier definition
-modules/<module-id>/              complete module source and hosted manifest
-dist/<module-id>-<version>.zip    current installable bundle per free module
-tools/sync-modules.mjs            syncs free modules from Foundry and rebuilds bundles
-tools/release-module.mjs          bumps, syncs, tags and pushes one free module
-tools/install-urls.mjs            keeps manifest/download pointed at main
-tools/build-tier-packages.mjs     builds the private paid-tier release folders
-tools/zip-module.py               archive helper: module folder at the zip root
-```
 
 ## Notes
 
@@ -119,5 +59,26 @@ tools/zip-module.py               archive helper: module folder at the zip root
 
 - **Midi-QOL** — the armory passes item use through `item.use({ event })`, so Midi-QOL handles attacks and damage when active.
 - **Item Piles** — a box button appears in the sheet navigation for Item Piles piles and merchants, opening their interface. Neither module is required.
+
+## For maintainers
+
+The repository mirrors the free modules installed in Foundry. Point `--source` at your own Foundry `Data/modules` folder, or set `FOUNDRY_MODULES` and leave the flag off.
+
+```powershell
+node tools/sync-modules.mjs --source "<Foundry Data>/modules"
+node tools/release-module.mjs <module-id>
+```
+
+- `sync-modules.mjs` copies the free tier out of Foundry, drops transient `LOCK` files, preserves LevelDB journals, and rebuilds one zip per module.
+- `release-module.mjs` bumps the installed manifest, syncs, commits, tags `<module-id>-v<version>` and pushes `main`.
+- `build-tier-packages.mjs` packages the paid tiers from the same source into a separate folder outside this repository.
+- `tiers.json` lists every tier; only the free one is ever synced here.
+
+```text
+modules/<module-id>/              module source, including compendium packs
+dist/<module-id>-<version>.zip    installable bundle for each free module
+tiers.json                        tier definition
+tools/                            sync, release and packaging scripts
+```
 
 © Faewns-Hellion
