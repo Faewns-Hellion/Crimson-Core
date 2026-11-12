@@ -4,6 +4,10 @@ import sys
 import zipfile
 from pathlib import Path
 
+# Fixed entry timestamp: the package must depend on content, not on when a
+# file happened to be copied, so a sync never dirties an unrelated module.
+FIXED_TIME = (1980, 1, 1, 0, 0, 0)
+
 if len(sys.argv) < 3:
     raise SystemExit("usage: zip-module.py <module-dir> <output.zip>")
 
@@ -22,7 +26,13 @@ try:
                 continue
             if path.name == "LOCK" or path.suffix.lower() in {".zip", ".tmp"}:
                 continue
-            archive.write(path, (Path(root) / path.relative_to(source)).as_posix())
+            info = zipfile.ZipInfo(
+                (Path(root) / path.relative_to(source)).as_posix(),
+                date_time=FIXED_TIME,
+            )
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = (0o644 & 0xFFFF) << 16
+            archive.writestr(info, path.read_bytes())
 except OSError as error:
     destination.unlink(missing_ok=True)
     raise SystemExit(f"could not write {destination}: {error}")
