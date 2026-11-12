@@ -33,7 +33,7 @@
   ],
   "readme": "https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/README.md",
   "url": "https://github.com/Faewns-Hellion/Crimson-Core",
-  "manifest": "https://github.com/Faewns-Hellion/Crimson-Core/releases/download/crimson-fantasy-armory-v0.1.1/module.json",
-  "download": "https://github.com/Faewns-Hellion/Crimson-Core/releases/download/crimson-fantasy-armory-v0.1.1/crimson-fantasy-armory-0.1.1.zip",
+  "manifest": "https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/modules/crimson-fantasy-armory/module.json",
+  "download": "https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/dist/crimson-fantasy-armory-0.1.6.zip",
   "bugs": "https://github.com/Faewns-Hellion/Crimson-Core/issues"
 }

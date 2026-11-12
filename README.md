@@ -33,12 +33,14 @@ Each module is a separate package:
 - `modules/<module-id>/` is the complete source, including compendium packs.
 - `dist/<module-id>-<version>.zip` is the matching installable bundle. Its root is the module folder, so it can be extracted directly into `Data/modules/`.
 
-For a release, use a tag named `<module-id>-v<version>` and attach:
+A module that advertises install URLs carries them in its own `module.json`, served from `main`:
 
-1. `modules/<module-id>/module.json` as the manifest.
-2. `dist/<module-id>-<version>.zip` as the package.
+- manifest — `https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/modules/<module-id>/module.json`
+- package — `https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main/dist/<module-id>-<version>.zip`
 
-In Foundry VTT Setup, open **Add-on Modules → Install Module**, paste that module's manifest URL, and install it. Enable the module in **Manage Modules** in the world. Alternatively, unzip the package into `Data/modules/` and restart Foundry.
+`sync-modules.mjs` rewrites both fields on every sync, so they always match the version in `dist/`. Tags named `<module-id>-v<version>` are optional archival snapshots; installs always follow `main`.
+
+In Foundry VTT Setup, open **Add-on Modules → Install Module**, paste a module's manifest URL, and install it. Enable the module in **Manage Modules** in the world. Alternatively, unzip the package into `Data/modules/` and restart Foundry.
 
 Only the free armory sheet ships here. Enable **one** armory module per world: every armory sheet registers for character, NPC and vehicle actors, and running two leaves neither as the default.
 

@@ -20,6 +20,7 @@ import {
   readFileSync,
   rmSync,
   statSync,
+  writeFileSync,
 } from 'node:fs';
 
 const ROOT = resolve(import.meta.dirname, '..');
@@ -63,6 +64,21 @@ function isSkipped(sourcePath) {
   return SKIP_EXTENSIONS.some((extension) => name.toLowerCase().endsWith(extension));
 }
 
+const INSTALL_BASE = 'https://raw.githubusercontent.com/Faewns-Hellion/Crimson-Core/main';
+
+/**
+ * Modules that advertise Foundry install URLs must point at this repository's
+ * current main branch; otherwise a version bump leaves a dead download link.
+ * Modules with no install URLs stay untouched.
+ */
+function applyInstallUrls(manifestPath, id, version) {
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  if (!manifest.manifest && !manifest.download) return;
+  manifest.manifest = `${INSTALL_BASE}/modules/${id}/module.json`;
+  manifest.download = `${INSTALL_BASE}/dist/${id}-${version}.zip`;
+  writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+}
+
 function copyModule(id) {
   const source = join(sourceRoot, id);
   const target = join(modulesRoot, id);
@@ -92,6 +108,8 @@ function copyModule(id) {
   if (!existsSync(join(target, 'module.json'))) {
     throw new Error(`Copy failed for ${id}: module.json is missing`);
   }
+
+  applyInstallUrls(join(target, 'module.json'), id, manifest.version);
 
   const zipPath = join(distRoot, `${id}-${manifest.version}.zip`);
   rmSync(zipPath, { force: true });
