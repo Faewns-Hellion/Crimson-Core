@@ -274,12 +274,9 @@ body #pause::before {
   content: "";
   position: absolute;
   inset: 0;
-  /* Baked by build-dragon-pause.py: still dragon whose eye, open mouth and gems pulse with light. */
-  background: url("assets/dragon-pause-animated.webp") center / contain no-repeat;
+  /* Static pause artwork. The baked, pulsing animation was retired; keep the still. */
+  background: url("assets/dragon-pause-static.png") center / contain no-repeat;
   pointer-events: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  body #pause::before { background-image: url("assets/dragon-pause-static.png"); }
 }
 body #pause > div {
   animation: none;
