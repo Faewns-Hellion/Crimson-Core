@@ -29,7 +29,8 @@
         "crimson-adaptations",
         "crimson-random-items",
         "crimson-bag",
-        "crimson-feats"
+        "crimson-feats",
+        "crimson-fantasy-tokens"
       ]
     },
     {
@@ -69,7 +70,8 @@
         "crimson-random-items",
         "crimson-rivals",
         "crimson-shipwright",
-        "neon-odyssey-generator"
+        "neon-odyssey-generator",
+        "crimson-fantasy-tokens"
       ]
     },
     {
@@ -94,7 +96,8 @@
         "crimson-random-items",
         "crimson-rivals",
         "crimson-shipwright",
-        "neon-odyssey-generator"
+        "neon-odyssey-generator",
+        "crimson-fantasy-tokens"
       ]
     }
   ]
