@@ -10,7 +10,7 @@ This repository is the **Crimson Initiate** tier from my collection of modules. 
 | --- | --- | --- |
 | **Crimson Initiate** | Free | `crimson-hub`, `crimson-fantasy-armory`, `crimson-dragon-theme`, `crimson-drafts`, `crimson-icons` |
 | **Fantasy Table** | $5/month | Everything in Crimson Initiate, plus `crimson-fantasy-generator`, `crimson-shipwright`, `crimson-adaptations`, `crimson-random-items`, `crimson-bag`, `crimson-feats` |
-| **Galaxy Table** | $5/month | Everything in Crimson Initiate, plus `crimson-galaxy-armory`, `neon-odyssey-generator`, `crimson-mechanic`, `crimson-rivals`, `crimson-currency`, `crimson-obsidian`, `crimson-feats` |
+| **Galaxy Table** | $5/month | Everything in Crimson Initiate, plus `crimson-galaxy-armory`, `neon-odyssey-generator`, `crimson-mechanic`, `crimson-rivals`, `crimson-obsidian`, `crimson-feats` |
 | **Crimson All-Access** | $10/month | All 17 public modules, every future public module, early access, dev logs and votes |
 | **Crimson Architect** | $20/month | All-Access, plus priority requests, setup help and credits |
 

@@ -1,3 +1,4 @@
 node_modules/
 *.tmp
 modules/**/packs/**/LOCK
+tiers.private.json

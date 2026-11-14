@@ -32,6 +32,18 @@ const ROOT = resolve(import.meta.dirname, '..');
 const ZIP_HELPER = join(ROOT, 'tools', 'zip-module.py');
 const TIERS = JSON.parse(readFileSync(join(ROOT, 'tiers.json'), 'utf8'));
 
+// Module ids that must never be named in the public tiers.json are supplied by a
+// local, git-ignored overlay (tiers.private.json) and merged in here at build time.
+const PRIVATE_TIERS_FILE = join(ROOT, 'tiers.private.json');
+if (existsSync(PRIVATE_TIERS_FILE)) {
+  const overlay = JSON.parse(readFileSync(PRIVATE_TIERS_FILE, 'utf8')).tiers ?? {};
+  for (const [tierId, ids] of Object.entries(overlay)) {
+    const tier = TIERS.tiers.find(candidate => candidate.id === tierId);
+    if (!tier) continue;
+    tier.modules = [...new Set([...tier.modules, ...ids])];
+  }
+}
+
 function usage(message) {
   if (message) console.error(`\n${message}`);
   console.error(

@@ -43,7 +43,6 @@
         "neon-odyssey-generator",
         "crimson-mechanic",
         "crimson-rivals",
-        "crimson-currency",
         "crimson-obsidian",
         "crimson-feats"
       ]
@@ -57,7 +56,6 @@
       "modules": [
         "crimson-adaptations",
         "crimson-bag",
-        "crimson-currency",
         "crimson-drafts",
         "crimson-dragon-theme",
         "crimson-fantasy-armory",
@@ -83,7 +81,6 @@
       "modules": [
         "crimson-adaptations",
         "crimson-bag",
-        "crimson-currency",
         "crimson-drafts",
         "crimson-dragon-theme",
         "crimson-fantasy-armory",
